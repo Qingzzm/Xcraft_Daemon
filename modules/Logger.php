@@ -18,7 +18,7 @@ class Logger{
         $this->PrintLine('/--    \--  \------/  |-|        \-------/ \ |-|             --     ');
         $this->PrintLine('                                                        '.$Version.'');
         foreach($StartingMessage as $SingleMessage){
-            $this->PrintLine($SingleMessage,1);
+            $this->PrintLine($SingleMessage,0);
         }
     }
     public function PrintLine($Message,$Level = 0){

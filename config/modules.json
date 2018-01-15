@@ -1,5 +1,6 @@
 [
     "Logger",
     "Minecraft",
-    "Network"
+    "Network",
+    "Encrypt"
 ]

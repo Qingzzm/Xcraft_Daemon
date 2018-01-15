@@ -34,6 +34,7 @@ if(!file_exists($setting_file)) {
     file_put_contents($setting_file,json_encode($settings,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT));
 }else{
     $settings=json_decode(file_get_contents($setting_file),true);
+    $StartingMessage["YesConfig:settings.json"] = "加载配置文件: settings.json";
     if($settings == null)
         die("FATAL ERROR(0)!\r\n");
 }
@@ -48,6 +49,7 @@ if(!file_exists($module_file)) {
     file_put_contents($module_file,json_encode($modules,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT));
 }else{
     $modules=json_decode(file_get_contents($module_file),true);
+    $StartingMessage["YesConfig:modules.json"] = "加载配置文件: modules.json";
     if($modules == null)
         die("FATAL ERROR(0)!\r\n");
 }
@@ -56,13 +58,15 @@ foreach($modules as $module){
     if(file_exists(MODULEDIR.$module.".php")){
         include(MODULEDIR.$module.".php");
         ${$module} = new $module;
+        $StartingMessage["YesModule:".$module] = "加载模组文件: ".$module;
     }else{
         $StartingMessage["NoModule:".$module] = "找不到模组文件: ".$module.".php,Xcraft将无法加载".$module.",如果".$module."是核心Module,则Xcraft会报错崩溃";
     }
 }
 //检测核心Module是否存在
-if(!isset($Logger)){
+if(!isset($Logger) or !isset($Encrypt)){
     die("FATAL ERROR(1)!\r\n");
 }
 //Logger开始运行咯!
 $Logger->PrintStartingMessages($StartingMessage,XC_VERSION);
+$Logger->PrintLine("加密Module配置: ".$Encrypt->SetMP("aes-128-cbc",$settings["Password"]));
