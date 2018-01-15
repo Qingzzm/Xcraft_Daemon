@@ -30,6 +30,8 @@ if(!file_exists($setting_file)) {
         "DaemonID"=>1,
         "DaemonIP"=>"127.0.0.1",
         "DaemonPort"=>18114,//新版Xcraft开始开发日期
+        'worker_num' => 8,
+        'max_request' => 10000,
         "Password"=>"January14,2018"
     );
     file_put_contents($setting_file,json_encode($settings,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT));
@@ -73,5 +75,5 @@ if(!isset($Logger) or !isset($Encrypt) or !isset($Network)){
 $Logger->PrintStartingMessages($StartingMessage,XC_VERSION);
 $Logger->PrintLine("Logger配置: "."{}");
 $Logger->PrintLine("Encrypt配置: ".$Encrypt->SetMP("aes-128-cbc",$settings["Password"]));
-$Logger->PrintLine("Network配置: ".$Network->SetMP($settings["DaemonIP"],$settings["DaemonPort"],$settings["Interval"]));
+$Logger->PrintLine("Network配置: ".$Network->SetMP($settings["DaemonIP"],$settings["DaemonPort"],$settings["Interval"],$settings['worker_num'],$settings['max_request']));
 $Network->StartWeb();
