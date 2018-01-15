@@ -12,6 +12,8 @@ define(BASEDIR,dirname(__FILE__)."/");
 define(MODULEDIR,BASEDIR."modules/");
 define(CONFIGDIR,BASEDIR."config/");
 define(DEPENDENCYDIR,BASEDIR."dependencies/");
+define(JARDIR,BASEDIR."jars/");
+define(SERVERDIR,BASEDIR."servers/");
 //因为啊,这个在读取modules之前没法使用输出函数啊...所以只能通过一个数组$StartingMessage[]去把预输出的信息都给梳理出来,启动之后立马把这些信息读取并且unset变量
 $StartingMessage = array();
 //预先修复目录
@@ -40,7 +42,8 @@ if(!file_exists($module_file)) {
     $modules=array(
         "Logger",
         "Minecraft",
-        "Network"
+        "Network",
+        "Encrypt"
     );
     file_put_contents($module_file,json_encode($modules,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT));
 }else{
@@ -62,4 +65,4 @@ if(!isset($Logger)){
     die("FATAL ERROR(1)!\r\n");
 }
 //Logger开始运行咯!
-$Logger->PrintStartingMessages($StartingMessage);
+$Logger->PrintStartingMessages($StartingMessage,XC_VERSION);

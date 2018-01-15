@@ -9,14 +9,14 @@ class Logger{
     public function __construct(){
 
     }
-    public function PrintStartingMessages($StartingMessage){
+    public function PrintStartingMessages($StartingMessage,$Version){
         $this->PrintLine('\--    --/  /------\  |-|  /--   /-------\   |-------|  |----------|');
         $this->PrintLine(' \ \  / /  / /-----/  |-| / /   / /-----\ |  |-|-----|  |----------|');
         $this->PrintLine('  \ || /  / /         |-|/ /   / /      | |  | |             ||     ');
         $this->PrintLine('  / || \  \ \         |-|-/    \ \      | |  | |-----        ||     ');
         $this->PrintLine(' / /  \ \  \ \-----\  |-|       \ \-----/ |  | |             ||     ');
         $this->PrintLine('/--    \--  \------/  |-|        \-------/ \ |-|             --     ');
-        $this->PrintLine('                                                     Ver1.0.0-beta.1');
+        $this->PrintLine('                                                        '.$Version.'');
         foreach($StartingMessage as $SingleMessage){
             $this->PrintLine($SingleMessage,1);
         }
