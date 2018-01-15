@@ -9,11 +9,15 @@ class Network{
     public function __construct(){
 
     }
-    public function setMP($http){
-        $this->http = $http;
-        return json_encode(array());
+    public function setMP($ip,$port){
+        $this->ip = $ip;
+        $this->port = $port;
+        $this->http = new swoole_http_server($this->ip,$this->port);
+        return json_encode(array("ip"=>$this->ip,"port"=>$this->port));
     }
-    public function run(){
+    public function StartWeb(){
+        while(1){
 
+        }
     }
 }

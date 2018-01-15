@@ -68,9 +68,9 @@ foreach($modules as $module){
 if(!isset($Logger) or !isset($Encrypt) or !isset($Network)){
     die("FATAL ERROR(1)!\r\n");
 }
-$http = new swoole_http_server($settings["DaemonIP"],$settings["DaemonPort"]);
 //Logger开始运行咯!
 $Logger->PrintStartingMessages($StartingMessage,XC_VERSION);
 $Logger->PrintLine("Logger配置: "."{}");
 $Logger->PrintLine("Encrypt配置: ".$Encrypt->SetMP("aes-128-cbc",$settings["Password"]));
-$Logger->PrintLine("Network配置: ".$Network->SetMP($http));
+$Logger->PrintLine("Network配置: ".$Network->SetMP($settings["DaemonIP"],$settings["DaemonPort"]));
+$Network->StartWeb();
