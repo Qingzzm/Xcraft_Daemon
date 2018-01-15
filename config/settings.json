@@ -3,5 +3,7 @@
     "DaemonID": 1,
     "DaemonIP": "127.0.0.1",
     "DaemonPort": 18114,
+    "worker_num": 8,
+    "max_request": 10000,
     "Password": "January14,2018"
 }

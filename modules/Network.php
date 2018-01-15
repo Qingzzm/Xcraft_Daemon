@@ -26,9 +26,30 @@ class Network{
         ));
         $this->serv->on('Receive', function($serv, $fd, $from_id, $data){
             $respData='<h1>Hello Swoole.</h1>';
-            response($serv,$fd,$respData);//封装并发送HTTP响应报文
+            $this->response($serv,$fd,$respData);//封装并发送HTTP响应报文
         });
         return json_encode(array("ip"=>$this->ip,"port"=>$this->port));
+    }
+    public function response($serv,$fd,$respData){
+            //响应行
+            $response = array(
+                'HTTP/1.1 200',
+            );
+            //响应头
+            $headers = array(
+                'Server'=>'XcraftServer',
+                'Content-Type'=>'text/html;charset=utf8',
+                'Content-Length'=>strlen($respData),
+            );
+            foreach($headers as $key=>$val){
+                $response[] = $key.':'.$val;
+            }
+            //空行
+            $response[] = '';
+            //响应体
+            $response[] = $respData;
+            $send_data = join("\r\n",$response);
+            $serv->send($fd, $send_data);
     }
     public function StartWeb(){
         $this->serv->start();
