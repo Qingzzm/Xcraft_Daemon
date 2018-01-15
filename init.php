@@ -39,6 +39,7 @@ if(!file_exists($setting_file)) {
     if($settings == null)
         die("FATAL ERROR(0)!\r\n");
 }
+$settings["Interval"]=1000/$settings["TPS"];
 if(!file_exists($module_file)) {
     $StartingMessage["NoConfig:modules.json"] = "找不到配置文件: modules.json,正在试图创建新文件";
     $modules=array(
@@ -72,5 +73,5 @@ if(!isset($Logger) or !isset($Encrypt) or !isset($Network)){
 $Logger->PrintStartingMessages($StartingMessage,XC_VERSION);
 $Logger->PrintLine("Logger配置: "."{}");
 $Logger->PrintLine("Encrypt配置: ".$Encrypt->SetMP("aes-128-cbc",$settings["Password"]));
-$Logger->PrintLine("Network配置: ".$Network->SetMP($settings["DaemonIP"],$settings["DaemonPort"]));
+$Logger->PrintLine("Network配置: ".$Network->SetMP($settings["DaemonIP"],$settings["DaemonPort"],$settings["Interval"]));
 $Network->StartWeb();
