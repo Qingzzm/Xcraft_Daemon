@@ -9,6 +9,9 @@ class Logger{
     public function __construct(){
 
     }
+    public function setMP(){
+
+    }
     public function PrintStartingMessages($StartingMessage,$Version){
         $this->PrintLine('\--    --/  /------\  |-|  /--   /-------\   |-------|  |----------|');
         $this->PrintLine(' \ \  / /  / /-----/  |-| / /   / /-----\ |  |-|-----|  |----------|');

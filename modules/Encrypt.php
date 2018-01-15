@@ -15,9 +15,9 @@ class Encrypt{
         return json_encode(array("Method"=>$this->method,"Password"=>$this->password));
     }
     public function Encode($data){
-        return openssl_encrypt($data,$this->method,$this->password);
+        return base64_encode(openssl_encrypt($data,$this->method,$this->password));
     }
     public function Decode($data){
-        return openssl_encrypt($data,$this->method,$this->password);
+        return base64_decode(openssl_encrypt($data,$this->method,$this->password));
     }
 }

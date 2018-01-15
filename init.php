@@ -28,6 +28,7 @@ if(!file_exists($setting_file)) {
     $settings=array(
         "TPS"=>60,
         "DaemonID"=>1,
+        "DaemonIP"=>"127.0.0.1",
         "DaemonPort"=>18114,//新版Xcraft开始开发日期
         "Password"=>"January14,2018"
     );
@@ -64,9 +65,11 @@ foreach($modules as $module){
     }
 }
 //检测核心Module是否存在
-if(!isset($Logger) or !isset($Encrypt)){
+if(!isset($Logger) or !isset($Encrypt) or !isset($Network)){
     die("FATAL ERROR(1)!\r\n");
 }
 //Logger开始运行咯!
 $Logger->PrintStartingMessages($StartingMessage,XC_VERSION);
-$Logger->PrintLine("加密Module配置: ".$Encrypt->SetMP("aes-128-cbc",$settings["Password"]));
+$Logger->PrintLine("Logger配置: "."{}");
+$Logger->PrintLine("Encrypt配置: ".$Encrypt->SetMP("aes-128-cbc",$settings["Password"]));
+$Logger->PrintLine("Network配置: ".$Network->SetMP($settings["DaemonIP"],$settings["DaemonPort"]));
