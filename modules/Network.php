@@ -26,12 +26,12 @@ class Network{
             'dispatch_mode' => 2,
             'debug_mode'=> 1,
         ));
-        $this->serv->on('Receive', function($fd, $from_id, $data){
-            $this->response($fd,$from_id,$data);//封装并发送HTTP响应报文
+        $this->serv->on('Receive', function($serv, $fd, $from_id, $data){
+            $this->response($serv,$fd,$from_id,$data);//封装并发送HTTP响应报文
         });
         return json_encode(array("ip"=>$this->ip,"port"=>$this->port));
     }
-    public function response($fd,$from_id,$data){
+    public function response($serv,$fd,$from_id,$data){
             //响应行
             $respData = 'Welcome!!!!';
             $respData = $this->Encrypt->Encode($respData);
@@ -52,8 +52,8 @@ class Network{
             //响应体
             $response[] = $respData;
             $send_data = join("\r\n",$response);
-            $this->serv->send($fd, $send_data);
-        $this->Logger->PrintLine("收到一条http请求,from_id:".$from_id."FD:".$fd);
+            $serv->send($fd, $send_data);
+        $this->Logger->PrintLine("收到一条http请求,from_id:".$from_id);
 
     }
     public function StartWeb(){
