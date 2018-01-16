@@ -78,4 +78,7 @@ $Logger->PrintStartingMessages($StartingMessage,XC_VERSION);
 $Logger->PrintLine("Logger配置: "."{}");
 $Logger->PrintLine("Encrypt配置: ".$Encrypt->SetMP("aes-128-cbc",$settings["Password"]));
 $Logger->PrintLine("Network配置: ".$Network->SetMP($settings["DaemonIP"],$settings["DaemonPort"],$settings["Interval"],$settings['worker_num'],$settings['max_request'],$Logger,$Encrypt,XC_VERSION));
+unset($StartingMessage);
+unset($setting_file);
+unset($module_file);
 $Network->StartWeb();
