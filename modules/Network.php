@@ -9,12 +9,13 @@ class Network{
     public function __construct(){
 
     }
-    public function setMP($ip,$port,$interval,$worker_num,$max_request){
+    public function setMP($ip,$port,$interval,$worker_num,$max_request,$Logger){
         $this->ip = $ip;
         $this->port = $port;
         $this->interval = $interval;
         $this->worker_num = $worker_num;
         $this->max_request= $max_request;
+        $this->Logger=$Logger;
         //$this->http = new swoole_http_server($this->ip,$this->port);
         $this->serv = new swoole_server($this->ip, $this->port);
         $this->serv->set(array(
@@ -25,8 +26,7 @@ class Network{
             'debug_mode'=> 1,
         ));
         $this->serv->on('Receive', function($serv, $fd, $from_id, $data){
-            $respData='<h1>Hello Swoole.</h1>';
-            $this->response($serv,$fd,$respData);//封装并发送HTTP响应报文
+            $this->response($serv,$fd);//封装并发送HTTP响应报文
         });
         return json_encode(array("ip"=>$this->ip,"port"=>$this->port));
     }
@@ -47,9 +47,12 @@ class Network{
             //空行
             $response[] = '';
             //响应体
+            $respData = '233';
             $response[] = $respData;
             $send_data = join("\r\n",$response);
             $serv->send($fd, $send_data);
+        $this->Logger->PrintLine("收到一条消息,返回结果".$send_data);
+
     }
     public function StartWeb(){
         $this->serv->start();
