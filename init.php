@@ -43,7 +43,7 @@ if(!file_exists($setting_file)) {
     if($settings == null)
         die("FATAL ERROR(0)!\r\n");
 }
-$settings["Interval"]=1000/$settings["TPS"];
+$settings["Interval"]=round(1000/$settings["TPS"]);
 if(!file_exists($module_file)) {
     $StartingMessage["NoConfig:modules.json"] = "找不到配置文件: modules.json,正在试图创建新文件";
     $modules=array(
