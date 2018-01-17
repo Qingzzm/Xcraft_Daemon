@@ -14,4 +14,7 @@ class Daemon{
         $this->Encrypt = $Encrypt;
         return json_encode(array());
     }
+    public function ReceiveConnection(){
+
+    }
 }

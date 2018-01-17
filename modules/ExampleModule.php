@@ -19,6 +19,6 @@ class ExampleModule{//类名必须和文件名一致,否则不会被init.php读�
         return json_encode(array("This is a Simple Example Module, it's free to delete."));//这里填写返回消息,比如配置...English Only
     }
     public function start(){//函数名可以自定义
-        $this->Logger->PrintLine("Wow! That's how an moule works.");//返回消息,具体参考./Logger.php
+        $this->Logger->PrintLine("Wow! That's how an module works.");//返回消息,具体参考./Logger.php
     }
 }

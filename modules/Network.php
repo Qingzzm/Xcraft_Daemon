@@ -53,7 +53,8 @@ class Network{
             $response[] = $respData;
             $send_data = join("\r\n",$response);
             $serv->send($fd, $send_data);
-        $this->Logger->PrintLine("收到一条http请求,from_id:".$from_id);
+        $this->Logger->PrintLine("收到一条http请求,from_id:".$from_id."data:{".$data."}");
+        var_dump($data);
 
     }
     public function StartWeb(){
