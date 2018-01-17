@@ -5,6 +5,5 @@
     "DaemonPort": 18114,
     "worker_num": 8,
     "max_request": 10000,
-    "Password": "January14,2018",
-    "IV": "1029384756473967"
+    "Password": "January14,2018"
 }

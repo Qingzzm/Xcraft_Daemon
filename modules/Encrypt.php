@@ -9,19 +9,18 @@ class Encrypt{
     public function __construct(){
 
     }
-    public function SetMP($method,$password,$IV){
+    public function SetMP($method,$password){
         $this->method = $method;
         $this->password = $password;
-        $this->IV = $IV;
         return json_encode(array("Method"=>$this->method,"Password"=>$this->password));
     }
     /* @Deprecated */
     public function Encode($data){
-        return base64_encode(openssl_encrypt($data,$this->method,$this->password,OPENSSL_RAW_DATA,$this->IV));
+        return base64_encode(openssl_encrypt($data,$this->method,$this->password,OPENSSL_RAW_DATA));
     }
     /* @Deprecated */
     public function Decode($data){
-        return rtrim(openssl_decrypt(base64_decode($data),$this->method,$this->password,OPENSSL_RAW_DATA,$this->IV));
+        return rtrim(openssl_decrypt(base64_decode($data),$this->method,$this->password,OPENSSL_RAW_DATA));
     }
     public function Encrypt($plaintext){
         $ivlen = openssl_cipher_iv_length($cipher=$this->method);
@@ -33,7 +32,7 @@ class Encrypt{
     }
     public function Decrypt($ciphertext){
         $c = base64_decode($ciphertext);
-        $ivlen = openssl_cipher_iv_length($cipher="AES-128-CBC");
+        $ivlen = openssl_cipher_iv_length($cipher=$this->method);
         $iv = substr($c, 0, $ivlen);
         $hmac = substr($c, $ivlen, $sha2len=32);
         $ciphertext_raw = substr($c, $ivlen+$sha2len);
