@@ -15,6 +15,6 @@ class Daemon{
         return json_encode(array());
     }
     public function ReceiveConnection(){
-
+        return "开始编写了2333";
     }
 }

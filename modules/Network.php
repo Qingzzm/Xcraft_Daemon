@@ -9,7 +9,7 @@ class Network{
     public function __construct(){
 
     }
-    public function setMP($ip,$port,$interval,$worker_num,$max_request,$Logger,$Encrypt,$Version){
+    public function setMP($ip,$port,$interval,$worker_num,$max_request,$Logger,$Encrypt,$Daemon,$Version){
         $this->ip = $ip;
         $this->port = $port;
         $this->interval = $interval;
@@ -17,6 +17,7 @@ class Network{
         $this->max_request = $max_request;
         $this->Logger = $Logger;
         $this->Encrypt = $Encrypt;
+        $this->Daemon = $Daemon;
         $this->Version = $Version;
         $this->serv = new swoole_server($this->ip, $this->port);
         $this->serv->set(array(
@@ -38,8 +39,7 @@ class Network{
         unset($datas);
         unset($data);
             //响应行
-            $respData = 'Welcome!!!!';
-            $respData = $this->Encrypt->Encrypt($respData);
+            $respData = $this->Encrypt->Encrypt($this->Daemon->ReceiveConnection($action));
             $response = array(
                 'HTTP/1.1 200',
             );
