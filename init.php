@@ -12,7 +12,7 @@ define('BASEDIR',dirname(__FILE__)."/");
 define('MODULEDIR',BASEDIR."modules/");
 define('CONFIGDIR',BASEDIR."config/");
 define('DEPENDENCYDIR',BASEDIR."dependencies/");
-define('JARDIR,BASEDIR'.BASEDIR."jars/");
+define('JARDIR,BASEDIR',BASEDIR."jars/");
 define('SERVERDIR',BASEDIR."servers/");
 //因为啊,这个在读取modules之前没法使用输出函数啊...所以只能通过一个数组$StartingMessage[]去把预输出的信息都给梳理出来,启动之后立马把这些信息读取并且unset变量
 $StartingMessage = array();
