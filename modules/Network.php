@@ -34,7 +34,7 @@ class Network{
     public function response($serv,$fd,$from_id,$data){
         //获取data
         $datas = explode(" ",$data);
-        $url = $datas[1];
+        $action = str_replace("/","",$datas[1]);
         unset($datas);
         unset($data);
             //响应行
@@ -58,7 +58,7 @@ class Network{
             $response[] = $respData;
             $send_data = join("\r\n",$response);
             $serv->send($fd, $send_data);
-        $this->Logger->PrintLine("收到一条http请求,from_id:".$from_id."url:{".$url."}");
+        $this->Logger->PrintLine("收到一条http请求,from_id:".$from_id.",参数:{".$action."}");
 
     }
     public function StartWeb(){
