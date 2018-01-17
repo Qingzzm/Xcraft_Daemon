@@ -34,7 +34,7 @@ class Network{
     public function response($serv,$fd,$from_id,$data){
             //响应行
             $respData = 'Welcome!!!!';
-            $respData = $this->Encrypt->Encode($respData);
+            $respData = $this->Encrypt->Encrypt($respData);
             $response = array(
                 'HTTP/1.1 200',
             );
