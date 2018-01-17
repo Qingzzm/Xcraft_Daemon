@@ -10,7 +10,7 @@ class Logger{
 
     }
     public function setMP(){
-
+        return json_encode(array());
     }
     public function PrintStartingMessages($StartingMessage,$Version){
         $this->PrintLine('\--    --/  /------\  |-|  /--   /-------\   |-------|  |----------|');

@@ -50,7 +50,9 @@ if(!file_exists($module_file)) {
         "Logger",
         "Minecraft",
         "Network",
-        "Encrypt"
+        "Encrypt",
+        "Daemon",
+        "ExampleModule"
     );
     file_put_contents($module_file,json_encode($modules,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT));
 }else{
@@ -75,9 +77,15 @@ if(!isset($Logger) or !isset($Encrypt) or !isset($Network)){
 }
 //Logger开始运行咯!
 $Logger->PrintStartingMessages($StartingMessage,XC_VERSION);
-$Logger->PrintLine("Logger配置: "."{}");
+$Logger->PrintLine("Logger配置: ".$Logger->SetMP());
 $Logger->PrintLine("Encrypt配置: ".$Encrypt->SetMP("aes-128-cbc",$settings["Password"]));
 $Logger->PrintLine("Network配置: ".$Network->SetMP($settings["DaemonIP"],$settings["DaemonPort"],$settings["Interval"],$settings['worker_num'],$settings['max_request'],$Logger,$Encrypt,XC_VERSION));
+$Logger->PrintLine("Daemon配置: ". $Daemon->SetMP());
+foreach($modules as $module){
+    if($module != "Logger" and $module != "Daemon" and $module != "Encrypt" and $module != "Network"){
+        $Logger->PrintLine($module."配置: ".${$module}->SetMP($Logger,$Encrypt,$Network,$Daemon,$Settings));
+    }
+}
 unset($StartingMessage);
 unset($setting_file);
 unset($module_file);
