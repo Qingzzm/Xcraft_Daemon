@@ -32,6 +32,11 @@ class Network{
         return json_encode(array("ip"=>$this->ip,"port"=>$this->port));
     }
     public function response($serv,$fd,$from_id,$data){
+        //获取data
+        $datas = explode(" ",$data);
+        $url = $datas[1];
+        unset($datas);
+        unset($data);
             //响应行
             $respData = 'Welcome!!!!';
             $respData = $this->Encrypt->Encrypt($respData);
@@ -53,8 +58,7 @@ class Network{
             $response[] = $respData;
             $send_data = join("\r\n",$response);
             $serv->send($fd, $send_data);
-        $this->Logger->PrintLine("收到一条http请求,from_id:".$from_id."data:{".$data."}");
-        var_dump($data);
+        $this->Logger->PrintLine("收到一条http请求,from_id:".$from_id."url:{".$url."}");
 
     }
     public function StartWeb(){
