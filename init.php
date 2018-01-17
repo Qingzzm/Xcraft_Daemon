@@ -80,7 +80,7 @@ $Logger->PrintStartingMessages($StartingMessage,XC_VERSION);
 $Logger->PrintLine("Logger配置: ".$Logger->SetMP());
 $Logger->PrintLine("Encrypt配置: ".$Encrypt->SetMP("aes-128-cbc",$settings["Password"]));
 $Logger->PrintLine("Network配置: ".$Network->SetMP($settings["DaemonIP"],$settings["DaemonPort"],$settings["Interval"],$settings['worker_num'],$settings['max_request'],$Logger,$Encrypt,XC_VERSION));
-$Logger->PrintLine("Daemon配置: ". $Daemon->SetMP());
+$Logger->PrintLine("Daemon配置: ". $Daemon->SetMP($Logger,$Encrypt));
 foreach($modules as $module){
     if($module != "Logger" and $module != "Daemon" and $module != "Encrypt" and $module != "Network"){
         $Logger->PrintLine($module."配置: ".${$module}->SetMP($Logger,$Encrypt,$Network,$Daemon,$Settings));
