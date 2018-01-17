@@ -5,7 +5,7 @@
  * Date: 1/16/18
  * Time: 10:02 AM
  */
-class Daemon extends Thread{
+class Daemon{
     public function __construct(){
 
     }

@@ -72,7 +72,7 @@ foreach($modules as $module){
     }
 }
 //检测核心Module是否存在
-if(!isset($Logger) or !isset($Encrypt) or !isset($Network)){
+if(!isset($Logger) or !isset($Encrypt) or !isset($Network) or !isset($Daemon)){
     die("FATAL ERROR(1)!\r\n");
 }
 //Logger开始运行咯!
