@@ -2,5 +2,7 @@
     "Logger",
     "Minecraft",
     "Network",
-    "Encrypt"
+    "Encrypt",
+    "Daemon",
+    "ExampleModule"
 ]
