@@ -78,7 +78,7 @@ if(!isset($Logger) or !isset($Encrypt) or !isset($Network) or !isset($Daemon)){
 //Logger开始运行咯!
 $Logger->PrintStartingMessages($StartingMessage,XC_VERSION);
 $Logger->PrintLine("Logger配置: ".$Logger->SetMP());
-$Logger->PrintLine("Encrypt配置: ".$Encrypt->SetMP("aes-128-cbc",$settings["Password"]));
+$Logger->PrintLine("Encrypt配置: ".$Encrypt->SetMP("aes-128-cbc",$settings["Password"],$settings["IV"]));
 $Logger->PrintLine("Network配置: ".$Network->SetMP($settings["DaemonIP"],$settings["DaemonPort"],$settings["Interval"],$settings['worker_num'],$settings['max_request'],$Logger,$Encrypt,XC_VERSION));
 $Logger->PrintLine("Daemon配置: ". $Daemon->SetMP($Logger,$Encrypt));
 foreach($modules as $module){

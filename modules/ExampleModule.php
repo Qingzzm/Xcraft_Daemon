@@ -16,7 +16,7 @@ class ExampleModule{//类名必须和文件名一致,否则不会被init.php读�
         $this->Daemon = $Daemon;
         $this->Settings = $Settings;
         $this->start();//这个函数名可以自定义
-        return json_encode(array("这里填写返回消息,比如配置"));//返回配置信息2333
+        return json_encode(array("This is a Simple Example Module, it's free to delete."));//这里填写返回消息,比如配置...English Only
     }
     public function start(){//函数名可以自定义
         $this->Logger->PrintLine($this->Settings);//返回消息,具体参考./Logger.php
