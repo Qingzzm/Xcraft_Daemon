@@ -23,7 +23,7 @@ class Daemon{
         $this->Logger = $Logger;
         $this->Encrypt = $Encrypt;
         $this->Password = $Password;
-        return json_encode(array());
+        return json_encode(array("Password"=>$this->Password));
     }
 
     /**
