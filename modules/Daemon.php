@@ -14,7 +14,10 @@ class Daemon{
         $this->Encrypt = $Encrypt;
         return json_encode(array());
     }
-    public function ReceiveConnection(){
+    public function ReceiveConnection($action){
+        switch($action){
+
+        }
         return "开始编写了2333";
     }
 }

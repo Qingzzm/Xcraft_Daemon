@@ -35,7 +35,8 @@ class Network{
     public function response($serv,$fd,$from_id,$data){
         //获取data
         $datas = explode(" ",$data);
-        $action = str_replace("/","",$datas[1]);
+        $action = str_replace("/","",$datas[1]);//因为某些兼容问题已经被我日了
+        $action = substr($datas[1],1);
         unset($datas);
         unset($data);
             //响应行
