@@ -4,5 +4,6 @@
     "Network",
     "Encrypt",
     "Daemon",
+    "UserControl",
     "ExampleModule"
 ]

@@ -16,8 +16,8 @@ class Daemon{
         return json_encode(array());
     }
     public function ReceiveConnection($action){
-        $action = explode("/",$action);
-        switch($action[0]){
+        $actions = explode("/",$action);
+        switch($actions[0]){
             case "Verify":
                 break;
             case "NewUser":
