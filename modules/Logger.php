@@ -44,10 +44,10 @@ class Logger{
     public function PrintLine($Message, $Level = 0){
         switch($Level) {
             case 0:
-                $stype = "INFO";
+                $stype = "INFORM";
                 break;
             case 1:
-                $stype = "WARN";
+                $stype = "WARNING";
                 break;
             case 2:
                 $stype = "ERROR";
@@ -68,5 +68,7 @@ class Logger{
                 $stype = "INFO";
         }
             echo "[" . date("H:i:s") . " " . $stype . "] " . $Message . "\r\n";
+        if($stype = "FATAL")
+            die("THE DAEMON DIES BECAUSE AN FATAL ERROR OCCURRED");
     }
 }
