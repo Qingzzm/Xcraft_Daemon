@@ -21,7 +21,6 @@ class Logger{
         $this->PrintLine('/--    \--  \------/  |-|        \-------/ \ |-|             --     ');
         $this->PrintLine('                                                        '.$Version.'');
         foreach($StartingMessage as $SingleMessage){
-            $SingleMessage = json_decode($SingleMessage,true);
             $this->PrintLine($SingleMessage[0],$SingleMessage[1]);
         }
     }
