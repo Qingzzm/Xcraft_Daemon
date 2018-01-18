@@ -38,6 +38,7 @@ class Daemon{
                 break;
             default:
                 return "[PANIC]未找到预期的操作";
+                $this->Logger->PrintLine("未找到预期的操作",1);
                 break;
         }
     }
