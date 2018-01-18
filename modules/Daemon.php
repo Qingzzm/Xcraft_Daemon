@@ -9,15 +9,36 @@ class Daemon{
     public function __construct(){
 
     }
-    public function SetMP($Logger,$Encrypt){
+    public function SetMP($Logger,$Encrypt,$Password){
         $this->Logger = $Logger;
         $this->Encrypt = $Encrypt;
+        $this->Password = $Password;
         return json_encode(array());
     }
     public function ReceiveConnection($action){
-        switch($action){
-
+        $action = explode("/",$action);
+        switch($action[0]){
+            case "Verify":
+                break;
+            case "NewUser":
+                break;
+            case "DeleteUser":
+                break;
+            case "NewServer":
+                break;
+            case "DeleteServer":
+                break;
+            case "StartServer":
+                break;
+            case "StopServer":
+                break;
+            case "RestartServer":
+                break;
+            case "GetCommandLine":
+                break;
+            default:
+                return "[PANIC]未找到预期的操作";
+                break;
         }
-        return "开始编写了2333";
     }
 }

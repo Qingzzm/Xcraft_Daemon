@@ -14,6 +14,7 @@ define('CONFIGDIR',BASEDIR."config/");
 define('DEPENDENCYDIR',BASEDIR."dependencies/");
 define('JARDIR',BASEDIR."jars/");
 define('SERVERDIR',BASEDIR."servers/");
+define('USERDATADIE',BASEDIR."Users");
 //因为啊,这个在读取modules之前没法使用输出函数啊...所以只能通过一个数组$StartingMessage[]去把预输出的信息都给梳理出来,启动之后立马把这些信息读取并且unset变量
 $StartingMessage = array();
 //预先修复目录
@@ -22,6 +23,7 @@ $StartingMessage = array();
 @mkdir(DEPENDENCYDIR);
 @mkdir(JARDIR);
 @mkdir(SERVERDIR);
+@mkdir(USERDATADIE);
 //读取config
 $setting_file=CONFIGDIR."settings.json";
 $module_file=CONFIGDIR."modules.json";
@@ -31,10 +33,11 @@ if(!file_exists($setting_file)) {
         "TPS"=>60,
         "DaemonID"=>1,
         "DaemonIP"=>"127.0.0.1",
-        "DaemonPort"=>18114,//新版Xcraft开始开发日期
+        "DaemonPort"=>18114,
+        "DaemonPassword" => "January18,2018",//DAEMON链接密码,默认为我当时正在写这个的日期
+        "AESPassword" => "January14,2018",//AES密钥,默认为新版Xcraft开始开发日期
         'worker_num' => 8,
-        'max_request' => 10000,
-        "Password"=>"January14,2018"
+        'max_request' => 10000
     );
     file_put_contents($setting_file,json_encode($settings,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT));
 }else{
@@ -52,6 +55,7 @@ if(!file_exists($module_file)) {
         "Network",
         "Encrypt",
         "Daemon",
+        "UserControl",
         "ExampleModule"
     );
     file_put_contents($module_file,json_encode($modules,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT));
@@ -72,19 +76,20 @@ foreach($modules as $module){
     }
 }
 //检测核心Module是否存在
-if(!isset($Logger) or !isset($Encrypt) or !isset($Network) or !isset($Daemon)){
+if(!isset($Logger) or !isset($Encrypt) or !isset($Network) or !isset($Daemon) or !isset($UserControl)){
     die("FATAL ERROR(1)!\r\n");
 }
 //Logger开始运行咯!
 $Logger->PrintStartingMessages($StartingMessage,XC_VERSION);
 $Logger->PrintLine("Logger配置: ".$Logger->SetMP());
-$Logger->PrintLine("Encrypt配置: ".$Encrypt->SetMP("aes-128-cbc",$settings["Password"]));
+$Logger->PrintLine("Encrypt配置: ".$Encrypt->SetMP("aes-128-cbc",$settings["AESPassword"]));
 $Logger->PrintLine("Network配置: ".$Network->SetMP($settings["DaemonIP"],$settings["DaemonPort"],$settings["Interval"],$settings['worker_num'],$settings['max_request'],$Logger,$Encrypt,$Daemon,XC_VERSION));
-$Logger->PrintLine("Daemon配置: ". $Daemon->SetMP($Logger,$Encrypt));
+$Logger->PrintLine("Daemon配置: ". $Daemon->SetMP($Logger,$Encrypt,$settings["DaemonPassword"]));
+$Logger->PrintLine("UserControl配置: ".$UserControl->SetMP($Logger,USERDATADIE));
 //加载普通module
 foreach($modules as $module){
-    if($module != "Logger" and $module != "Daemon" and $module != "Encrypt" and $module != "Network" and isset(${$module})){
-        $Logger->PrintLine($module."配置: ".${$module}->SetMP($Logger,$Encrypt,$Network,$Daemon,$settings));
+    if($module != "Logger" and $module != "Daemon" and $module != "Encrypt" and $module != "Network" and $module != "UserControl" and isset(${$module})){
+        $Logger->PrintLine($module."配置: ".${$module}->SetMP($Logger,$Encrypt,$Network,$Daemon,$UserControl,$settings));
     }
 }
 //unset掉一些变量,释放内存
