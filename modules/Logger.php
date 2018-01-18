@@ -21,7 +21,8 @@ class Logger{
         $this->PrintLine('/--    \--  \------/  |-|        \-------/ \ |-|             --     ');
         $this->PrintLine('                                                        '.$Version.'');
         foreach($StartingMessage as $SingleMessage){
-            $this->PrintLine($SingleMessage,0);
+            $SingleMessage = json_decode($SingleMessage,true);
+            $this->PrintLine($SingleMessage[0],$SingleMessage[1]);
         }
     }
     public function PrintLine($Message,$Level = 0){
@@ -34,6 +35,18 @@ class Logger{
                 break;
             case 2:
                 $stype = "ERROR";
+                break;
+            case 4:
+                $stype = "DANGER";
+                break;
+            case 5:
+                $stype = "PANIC";
+                break;
+            case 6:
+                $stype = "DEADLY";
+                break;
+            case 7:
+                $stype = "FATAL";
                 break;
             default:
                 $stype = "INFO";

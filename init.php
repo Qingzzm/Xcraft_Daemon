@@ -26,7 +26,7 @@ $StartingMessage = array();
 $setting_file=CONFIGDIR."settings.json";
 $module_file=CONFIGDIR."modules.json";
 if(!file_exists($setting_file)) {
-    $StartingMessage["NoConfig:settings.json"] = "找不到配置文件: settings.json,正在试图创建新文件";
+    $StartingMessage["NoConfig:settings.json"] = array("找不到配置文件: settings.json,正在试图创建新文件",1);
     $settings=array(
         "TPS"=>60,
         "DaemonID"=>1,
@@ -39,13 +39,13 @@ if(!file_exists($setting_file)) {
     file_put_contents($setting_file,json_encode($settings,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT));
 }else{
     $settings=json_decode(file_get_contents($setting_file),true);
-    $StartingMessage["YesConfig:settings.json"] = "加载配置文件: settings.json";
+    $StartingMessage["YesConfig:settings.json"] = array("加载配置文件: settings.json",0);
     if($settings == null)
         die("FATAL ERROR(0)!\r\n");
 }
 $settings["Interval"]=round(1000/$settings["TPS"]);
 if(!file_exists($module_file)) {
-    $StartingMessage["NoConfig:modules.json"] = "找不到配置文件: modules.json,正在试图创建新文件";
+    $StartingMessage["NoConfig:modules.json"] = array("找不到配置文件: modules.json,正在试图创建新文件",1);
     $modules=array(
         "Logger",
         "Minecraft",
@@ -57,7 +57,7 @@ if(!file_exists($module_file)) {
     file_put_contents($module_file,json_encode($modules,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT));
 }else{
     $modules=json_decode(file_get_contents($module_file),true);
-    $StartingMessage["YesConfig:modules.json"] = "加载配置文件: modules.json";
+    $StartingMessage["YesConfig:modules.json"] = array("加载配置文件: modules.json",0);
     if($modules == null)
         die("FATAL ERROR(0)!\r\n");
 }
@@ -66,9 +66,9 @@ foreach($modules as $module){
     if(file_exists(MODULEDIR.$module.".php")){
         include(MODULEDIR.$module.".php");
         ${$module} = new $module;
-        $StartingMessage["YesModule:".$module] = "加载模组文件: ".$module;
+        $StartingMessage["YesModule:".$module] = array("加载模组文件: ".$module,0);
     }else{
-        $StartingMessage["NoModule:".$module] = "找不到模组文件: ".$module.".php,Xcraft将无法加载".$module.",如果".$module."是核心Module,则Xcraft会报错崩溃";
+        $StartingMessage["NoModule:".$module] = array("找不到模组文件: ".$module.".php,Xcraft将无法加载".$module.",如果".$module."是核心Module,则Xcraft会报错崩溃",5);
     }
 }
 //检测核心Module是否存在
@@ -81,12 +81,15 @@ $Logger->PrintLine("Logger配置: ".$Logger->SetMP());
 $Logger->PrintLine("Encrypt配置: ".$Encrypt->SetMP("aes-128-cbc",$settings["Password"]));
 $Logger->PrintLine("Network配置: ".$Network->SetMP($settings["DaemonIP"],$settings["DaemonPort"],$settings["Interval"],$settings['worker_num'],$settings['max_request'],$Logger,$Encrypt,$Daemon,XC_VERSION));
 $Logger->PrintLine("Daemon配置: ". $Daemon->SetMP($Logger,$Encrypt));
+//加载普通module
 foreach($modules as $module){
     if($module != "Logger" and $module != "Daemon" and $module != "Encrypt" and $module != "Network" and isset(${$module})){
         $Logger->PrintLine($module."配置: ".${$module}->SetMP($Logger,$Encrypt,$Network,$Daemon,$settings));
     }
 }
+//unset掉一些变量,释放内存
 unset($StartingMessage);
 unset($setting_file);
 unset($module_file);
+//网页服务器是最晚开启的
 $Network->StartWeb();
