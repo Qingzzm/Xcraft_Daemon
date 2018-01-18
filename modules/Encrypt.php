@@ -6,10 +6,19 @@
  * Time: 9:09 AM
  */
 class Encrypt{
+    /**
+     * Encrypt constructor.
+     */
     public function __construct(){
 
     }
-    public function SetMP($method,$password){
+
+    /**
+     * @param $method
+     * @param $password
+     * @return string
+     */
+    public function SetMP($method, $password){
         $this->method = $method;
         $this->password = $password;
         return json_encode(array("Method"=>$this->method,"Password"=>$this->password));
@@ -22,6 +31,11 @@ class Encrypt{
     public function Decode($data){
         return rtrim(openssl_decrypt(base64_decode($data),$this->method,$this->password,OPENSSL_RAW_DATA));
     }
+
+    /**
+     * @param $plaintext
+     * @return string
+     */
     public function Encrypt($plaintext){
         $ivlen = openssl_cipher_iv_length($cipher=$this->method);
         $iv = openssl_random_pseudo_bytes($ivlen);
@@ -30,6 +44,11 @@ class Encrypt{
         $ciphertext = base64_encode( $iv.$hmac.$ciphertext_raw );
         return $ciphertext;
     }
+
+    /**
+     * @param $ciphertext
+     * @return bool|string
+     */
     public function Decrypt($ciphertext){
         $c = base64_decode($ciphertext);
         $ivlen = openssl_cipher_iv_length($cipher=$this->method);

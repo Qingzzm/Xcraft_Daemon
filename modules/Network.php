@@ -6,10 +6,26 @@
  * Time: 4:36 PM
  */
 class Network{
+    /**
+     * Network constructor.
+     */
     public function __construct(){
 
     }
-    public function setMP($ip,$port,$interval,$worker_num,$max_request,$Logger,$Encrypt,$Daemon,$Version){
+
+    /**
+     * @param $ip
+     * @param $port
+     * @param $interval
+     * @param $worker_num
+     * @param $max_request
+     * @param $Logger
+     * @param $Encrypt
+     * @param $Daemon
+     * @param $Version
+     * @return string
+     */
+    public function setMP($ip, $port, $interval, $worker_num, $max_request, $Logger, $Encrypt, $Daemon, $Version){
         $this->ip = $ip;
         $this->port = $port;
         $this->interval = $interval;
@@ -32,7 +48,14 @@ class Network{
         });
         return json_encode(array("ip"=>$this->ip,"port"=>$this->port));
     }
-    public function response($serv,$fd,$from_id,$data){
+
+    /**
+     * @param $serv
+     * @param $fd
+     * @param $from_id
+     * @param $data
+     */
+    public function response($serv, $fd, $from_id, $data){
         //获取data
         $datas = explode(" ",$data);
         $action = str_replace("/","",$datas[1]);//因为某些兼容问题已经被我日了
@@ -62,6 +85,10 @@ class Network{
         $this->Logger->PrintLine("收到一条http请求,from_id:".$from_id.",参数:{".$action."}");
 
     }
+
+    /**
+     *
+     */
     public function StartWeb(){
         $this->serv->start();
     }

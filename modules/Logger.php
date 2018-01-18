@@ -6,13 +6,25 @@
  * Time: 4:48 PM
  */
 class Logger{
+    /**
+     * Logger constructor.
+     */
     public function __construct(){
 
     }
+
+    /**
+     * @return string
+     */
     public function setMP(){
         return json_encode(array());
     }
-    public function PrintStartingMessages($StartingMessage,$Version){
+
+    /**
+     * @param $StartingMessage
+     * @param $Version
+     */
+    public function PrintStartingMessages($StartingMessage, $Version){
         $this->PrintLine('\--    --/  /------\  |-|  /--   /-------\   |-------|  |----------|');
         $this->PrintLine(' \ \  / /  / /-----/  |-| / /   / /-----\ |  |-|-----|  |----------|');
         $this->PrintLine('  \ || /  / /         |-|/ /   / /      | |  | |             ||     ');
@@ -24,7 +36,12 @@ class Logger{
             $this->PrintLine($SingleMessage[0],$SingleMessage[1]);
         }
     }
-    public function PrintLine($Message,$Level = 0){
+
+    /**
+     * @param $Message
+     * @param int $Level
+     */
+    public function PrintLine($Message, $Level = 0){
         switch($Level) {
             case 0:
                 $stype = "INFO";
