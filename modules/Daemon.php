@@ -92,7 +92,8 @@ class Daemon{
     public function Verify($DaemonPassword){
         if($DaemonPassword == $this->Password){
             return true;
+        }else {
+            return false;
         }
-        return false;
     }
 }
