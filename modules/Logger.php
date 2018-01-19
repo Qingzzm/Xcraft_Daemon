@@ -69,7 +69,7 @@ class Logger{
         }
             echo "[" . date("H:i:s") . " " . $stype . "] " . $Message . "\r\n";
         if($stype == "FATAL") {
-            die("THE DAEMON DIES BECAUSE AN FATAL ERROR OCCURRED");
+            die("THE DAEMON DIES BECAUSE AN FATAL ERROR OCCURRED\r\n");
         }
     }
 }
