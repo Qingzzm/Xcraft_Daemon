@@ -26,7 +26,7 @@ class UserControl{
     public function NewUser($account,$password){
         if(is_dir($this->DIR.$account."/")) {
             @mkdir($this->DIR . $account . "/");
-            file_put_contents($this->DIR . $account . "/password", md5($password));
+            file_put_contents($this->DIR . $account . "/paxssword", md5($password));
             if (@file_get_contents($this->DIR . $account . "/password") == md5($password)) {
                 $this->Logger->PrintLine("成功添加新用户,用户信息:" . json_encode(array("account" => $account, "password" => $password), 0));
                 return true;

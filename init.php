@@ -14,7 +14,7 @@ define('CONFIGDIR',BASEDIR."config/");
 define('DEPENDENCYDIR',BASEDIR."dependencies/");
 define('JARDIR',BASEDIR."jars/");
 define('SERVERDIR',BASEDIR."servers/");
-define('USERDATADIE',BASEDIR."Users");
+define('USERDATADIR',BASEDIR."users/");
 //因为啊,这个在读取modules之前没法使用输出函数啊...所以只能通过一个数组$StartingMessage[]去把预输出的信息都给梳理出来,启动之后立马把这些信息读取并且unset变量
 $StartingMessage = array();
 //预先修复目录
@@ -23,7 +23,7 @@ $StartingMessage = array();
 @mkdir(DEPENDENCYDIR);
 @mkdir(JARDIR);
 @mkdir(SERVERDIR);
-@mkdir(USERDATADIE);
+@mkdir(USERDATADIR);
 //读取config
 $setting_file=CONFIGDIR."settings.json";
 $module_file=CONFIGDIR."modules.json";
@@ -85,7 +85,7 @@ $Logger->PrintLine("Logger配置: ".$Logger->SetMP());
 $Logger->PrintLine("Encrypt配置: ".$Encrypt->SetMP("aes-128-cbc",$settings["AESPassword"]));
 $Logger->PrintLine("Network配置: ".$Network->SetMP($settings["DaemonIP"],$settings["DaemonPort"],$settings["Interval"],$settings['worker_num'],$settings['max_request'],$Logger,$Encrypt,$Daemon,XC_VERSION));
 $Logger->PrintLine("Daemon配置: ". $Daemon->SetMP($Logger,$Encrypt,$settings["DaemonPassword"],$UserControl));
-$Logger->PrintLine("UserControl配置: ".$UserControl->SetMP($Logger,USERDATADIE));
+$Logger->PrintLine("UserControl配置: ".$UserControl->SetMP($Logger,USERDATADIR));
 //加载普通module
 foreach($modules as $module){
     if($module != "Logger" and $module != "Daemon" and $module != "Encrypt" and $module != "Network" and $module != "UserControl" and isset(${$module})){
