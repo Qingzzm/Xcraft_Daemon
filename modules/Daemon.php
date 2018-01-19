@@ -19,9 +19,10 @@ class Daemon{
      * @param $Password
      * @return string
      */
-    public function SetMP($Logger, $Encrypt, $Password){
+    public function SetMP($Logger,$Encrypt,$UserControl,$Password){
         $this->Logger = $Logger;
         $this->Encrypt = $Encrypt;
+        $this->UserControl = $UserControl;
         $this->Password = $Password;
         return json_encode(array("Password"=>$this->Password));
     }
@@ -36,8 +37,26 @@ class Daemon{
             if ($this->Verify($actions[1])) {
                 switch ($actions[0]) {//第一层,分析动作是什么
                     case "NewUser":
+                        if(isset($actions[2]) and isset($actions[3])) {
+                            if($this->UserControl->NewUser($actions[2], $actions[3])){
+                                $this->Logger->PrintLine("接受来自客户端的添加用户请求并且请求成功");
+                                return "用户添加成功";
+                            }else{
+                                $this->Logger->PrintLine("接受来自客户端的添加用户请求并且请求失败");
+                                return "用户添加失败";
+                            }
+                        }
                         break;
                     case "DeleteUser":
+                        if(isset($actions[2])) {
+                            if($this->UserControl->DeleteUser($actions[2])){
+                                $this->Logger->PrintLine("接受来自客户端的删除用户请求并且请求成功");
+                                return "用户删除成功";
+                            }else{
+                                $this->Logger->PrintLine("接受来自客户端的删除用户请求并且请求失败");
+                                return "用户删除失败";
+                            }
+                        }
                         break;
                     case "NewServer":
                         break;
