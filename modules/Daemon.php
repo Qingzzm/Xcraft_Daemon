@@ -19,11 +19,11 @@ class Daemon{
      * @param $Password
      * @return string
      */
-    public function SetMP($Logger,$Encrypt,$UserControl,$Password){
+    public function SetMP($Logger,$Encrypt,$Password,$UserControl){
         $this->Logger = $Logger;
         $this->Encrypt = $Encrypt;
-        $this->UserControl = $UserControl;
         $this->Password = $Password;
+        $this->UserControl = $UserControl;
         return json_encode(array("Password"=>$this->Password));
     }
 
