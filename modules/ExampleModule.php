@@ -22,9 +22,9 @@ class ExampleModule{//类名必须和文件名一致,否则不会被init.php读�
      * @param $Settings
      * @return string
      */
-    public function SetMP($Logger, $Encrypt, $Network, $Daemon, $UserControl, $Settings){//这里把Logger,Encrypt,Network,Daemon这几个核心的object给传递过来,直接可以调用,$Settings是一个array包含设置
+    public function SetMP($Logger, $Security, $Network, $Daemon, $UserControl, $Settings){//这里把Logger,Encrypt,Network,Daemon这几个核心的object给传递过来,直接可以调用,$Settings是一个array包含设置
         $this->Logger = $Logger;//把局部变量改为一个类里都可以用的诡异的变量
-        $this->Encrypt = $Encrypt;
+        $this->Security = $Security;
         $this->Network = $Network;
         $this->Daemon = $Daemon;
         $this->UserControl = $UserControl;

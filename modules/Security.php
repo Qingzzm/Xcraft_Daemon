@@ -5,9 +5,9 @@
  * Date: 1/15/18
  * Time: 9:09 AM
  */
-class Encrypt{
+class Security{
     /**
-     * Encrypt constructor.
+     * Security constructor.
      */
     public function __construct(){
 
@@ -59,6 +59,13 @@ class Encrypt{
         $calcmac = hash_hmac('sha256', $ciphertext_raw, $this->password, $as_binary=true);
         if (hash_equals($hmac, $calcmac)) {//PHP 5.6+ timing attack safe comparison安全保护
             return $original_plaintext;
+        }else{
+            return false;
+        }
+    }
+    public function IsMatch($content){
+        if(preg_match('/^(?!_|\s\')[A-Za-z0-9_\x80-\xff\s\']+$/',$content)){
+            return true;
         }else{
             return false;
         }

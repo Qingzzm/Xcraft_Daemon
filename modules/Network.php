@@ -20,19 +20,19 @@ class Network{
      * @param $worker_num
      * @param $max_request
      * @param $Logger
-     * @param $Encrypt
+     * @param $Security
      * @param $Daemon
      * @param $Version
      * @return string
      */
-    public function setMP($ip, $port, $interval, $worker_num, $max_request, $Logger, $Encrypt, $Daemon, $Version){
+    public function setMP($ip, $port, $interval, $worker_num, $max_request, $Logger, $Security, $Daemon, $Version){
         $this->ip = $ip;
         $this->port = $port;
         $this->interval = $interval;
         $this->worker_num = $worker_num;
         $this->max_request = $max_request;
         $this->Logger = $Logger;
-        $this->Encrypt = $Encrypt;
+        $this->Security = $Security;
         $this->Daemon = $Daemon;
         $this->Version = $Version;
         $this->serv = new swoole_server($this->ip, $this->port);
@@ -63,7 +63,7 @@ class Network{
         unset($datas);
         unset($data);
             //响应行
-            $respData = $this->Encrypt->Encrypt($this->Daemon->ReceiveConnection($action));
+            $respData = $this->Security->Encrypt($this->Daemon->ReceiveConnection($action));
             $response = array(
                 'HTTP/1.1 200',
             );
