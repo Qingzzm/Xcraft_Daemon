@@ -44,7 +44,7 @@ class UserControl{
         if($this->Security->IsMatch($account)) {
             @unlink($this->DIR . $account . "/password");
             @rmdir($this->DIR . $account . "/");
-            if (!file_exists($this->DIR . $account . "/password")) {
+            if (file_exists($this->DIR . $account . "/password")) {
                 $this->Logger->PrintLine("失败删除老用户,用户信息:" . json_encode(array("account" => $account), 0));
                 return false;
             }

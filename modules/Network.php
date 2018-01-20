@@ -63,7 +63,7 @@ class Network{
         unset($datas);
         unset($data);
             //响应行
-            $respData = $this->Security->Decrypt($this->Security->Encrypt($this->Daemon->ReceiveConnection($action)));
+            $respData = $this->Security->Decrypt($this->Security->Encrypt($this->Daemon->ReceiveConnection($action)));//为了确保显示结果正常加密正常, 我选择加密后再解密,解密那个正式测试好了之后会删除的
             $response = array(
                 'HTTP/1.1 200',
             );
