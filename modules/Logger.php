@@ -42,6 +42,27 @@ class Logger{
      * @param int $Level
      */
     public function PrintLine($Message, $Level = 0){
+            echo "[" . date("H:i:s") . " " . $this->GetLevel($Level) . "] " . $Message . "\r\n";
+        if($this->GetLevel($Level) == "FATAL") {
+            die("THE DAEMON DIES BECAUSE AN FATAL ERROR OCCURRED\r\n");
+        }
+    }
+
+    /**
+     * @param $Message
+     * @param int $Level
+     * @param bool $status
+     * @return string
+     */
+    public function PrintJson($Message, $Level = 0, $status = true){
+        return json_encode(array("Message"=>'['.$this->GetLevel($Level).']'.$Message,"Status"=>$status));
+    }
+
+    /**
+     * @param $Level
+     * @return string
+     */
+    public function GetLevel($Level){
         switch($Level) {
             case 0:
                 $stype = "INFORM";
@@ -65,11 +86,8 @@ class Logger{
                 $stype = "FATAL";
                 break;
             default:
-                $stype = "INFO";
+                $stype = "INFORM";
         }
-            echo "[" . date("H:i:s") . " " . $stype . "] " . $Message . "\r\n";
-        if($stype == "FATAL") {
-            die("THE DAEMON DIES BECAUSE AN FATAL ERROR OCCURRED\r\n");
-        }
+        return $stype;
     }
 }

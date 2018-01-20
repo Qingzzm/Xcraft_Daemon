@@ -40,10 +40,10 @@ class Daemon{
                         if(isset($actions[2]) and isset($actions[3])) {
                             if($this->UserControl->NewUser($actions[2], $actions[3])){
                                 $this->Logger->PrintLine("接受来自客户端的添加用户请求并且请求成功");
-                                return "用户添加成功";
+                                return $this->Logger->PrintJson("用户添加成功",0,true);
                             }else{
                                 $this->Logger->PrintLine("接受来自客户端的添加用户请求并且请求失败");
-                                return "用户添加失败";
+                                return $this->Logger->PrintJson("用户添加失败",2,false);
                             }
                         }
                         break;
@@ -51,10 +51,10 @@ class Daemon{
                         if(isset($actions[2])) {
                             if($this->UserControl->DeleteUser($actions[2])){
                                 $this->Logger->PrintLine("接受来自客户端的删除用户请求并且请求成功");
-                                return "用户删除成功";
+                                return $this->Logger->PrintJson("用户删除成功",0,true);
                             }else{
                                 $this->Logger->PrintLine("接受来自客户端的删除用户请求并且请求失败");
-                                return "用户删除失败";
+                                return $this->Logger->PrintJson("用户删除失败",2,false);
                             }
                         }
                         break;
@@ -72,16 +72,16 @@ class Daemon{
                         break;
                     default:
                         $this->Logger->PrintLine("未找到预期的操作", 1);
-                        return "[WARNING]未找到预期的操作";
+                        return $this->Logger->PrintJson("未找到预期的操作",2,false);
                         break;
                 }
             } else {
                 $this->Logger->PrintLine("对接密码发生错误!", 2);
-                return "[ERROR]对接密码发生错误!";
+                return $this->Logger->PrintJson("对接密码发生错误!",2,false);
             }
         }else{
             $this->Logger->PrintLine("对接密码不存在....!!", 2);
-            return "[ERROR]对接密码不存在....!";
+            return $this->Logger->PrintJson("对接密码不存在....!",2,false);
         }
     }
 
