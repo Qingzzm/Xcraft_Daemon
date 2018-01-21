@@ -15,6 +15,7 @@ define('DEPENDENCYDIR',BASEDIR."dependencies/");
 define('JARDIR',BASEDIR."jars/");
 define('SERVERDIR',BASEDIR."servers/");
 define('USERDATADIR',BASEDIR."users/");
+define('DATADIR',BASEDIR."datas/");
 //因为啊,这个在读取modules之前没法使用输出函数啊...所以只能通过一个数组$StartingMessage[]去把预输出的信息都给梳理出来,启动之后立马把这些信息读取并且unset变量
 $StartingMessage = array();
 //预先修复目录
@@ -24,6 +25,7 @@ $StartingMessage = array();
 @mkdir(JARDIR);
 @mkdir(SERVERDIR);
 @mkdir(USERDATADIR);
+@mkdir(DATADIR);
 //读取config
 $setting_file=CONFIGDIR."settings.json";
 $module_file=CONFIGDIR."modules.json";
@@ -51,7 +53,6 @@ if(!file_exists($module_file)) {
     $StartingMessage["NoConfig:modules.json"] = array("找不到配置文件: modules.json,正在试图创建新文件",1);
     $modules=array(
         "Logger",
-        "Minecraft",
         "Network",
         "Security",
         "Daemon",
@@ -84,7 +85,7 @@ $Logger->PrintStartingMessages($StartingMessage,XC_VERSION);
 $Logger->PrintLine("Logger配置: ".$Logger->SetMP());
 $Logger->PrintLine("Security配置: ".$Security->SetMP("aes-128-cbc",$settings["AESPassword"]));
 $Logger->PrintLine("Network配置: ".$Network->SetMP($settings["DaemonIP"],$settings["DaemonPort"],$settings["Interval"],$settings['worker_num'],$settings['max_request'],$Logger,$Security,$Daemon,XC_VERSION));
-$Logger->PrintLine("Daemon配置: ". $Daemon->SetMP($Logger,$Security,$settings["DaemonPassword"],$UserControl));
+$Logger->PrintLine("Daemon配置: ". $Daemon->SetMP($Logger,$Security,$settings["DaemonPassword"],$UserControl,DATADIR));
 $Logger->PrintLine("UserControl配置: ".$UserControl->SetMP($Logger,$Security,USERDATADIR));
 //加载普通module
 foreach($modules as $module){
@@ -92,6 +93,7 @@ foreach($modules as $module){
         $Logger->PrintLine($module."配置: ".${$module}->SetMP($Logger,$Security,$Network,$Daemon,$UserControl,$settings));
     }
 }
+//加载一些库[Minecraft.php]
 //unset掉一些变量,释放内存
 unset($StartingMessage);
 unset($setting_file);

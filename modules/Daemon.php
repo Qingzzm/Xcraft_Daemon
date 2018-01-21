@@ -19,11 +19,23 @@ class Daemon{
      * @param $Password
      * @return string
      */
-    public function SetMP($Logger,$Security,$Password,$UserControl){
+    public function SetMP($Logger,$Security,$Password,$UserControl,$dir){
+        include(DEPENDENCYDIR."Minecraft.php");
         $this->Logger = $Logger;
         $this->Security = $Security;
         $this->Password = $Password;
         $this->UserControl = $UserControl;
+        $this->DIR = $dir;
+        if(!file_exists($this->DIR."serverlist.json")){
+            $Serverlist = array();
+            file_put_contents($this->DIR."serverlist.json",json_encode($Serverlist,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT));
+        }
+        foreach($Serverlist as $SingleServer){
+            $pool[] = new Minecraft($SingleServer);
+        }
+        foreach($pool as $singlethread){
+            $singlethread->start();
+        }
         return json_encode(array("Password"=>$this->Password));
     }
 
