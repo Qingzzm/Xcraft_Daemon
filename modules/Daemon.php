@@ -36,10 +36,16 @@ class Daemon{
             $this->Logger->PrintLine("服务器列表读取成功");
         }
         foreach($Serverlist as $SingleServer){
+            $this->Logger->PrintLine("服务器ID: ".$SingleServer." 正在开启");
             $pool[] = new Minecraft($SingleServer);
         }
-        foreach($pool as $singlethread){
-            $singlethread->start();
+        if(isset($pool)) {
+            foreach ($pool as $singlethread) {
+                $singlethread->start();
+            }
+            $this->Logger->PrintLine("所有服务器均已开启");
+        }else{
+            $this->Logger->PrintLine("服务器列表内没有任何服务器",1);
         }
         return json_encode(array("Password"=>$this->Password));
     }
