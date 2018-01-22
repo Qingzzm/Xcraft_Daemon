@@ -26,9 +26,13 @@ class Daemon{
         $this->Password = $Password;
         $this->UserControl = $UserControl;
         $this->DIR = $dir;
+        $this->Logger->PrintLine("读取服务器列表中");
         if(!file_exists($this->DIR."serverlist.json")){
+            $this->Logger->PrintLine("服务器列表不存在,正在试图创建",3);
             $Serverlist = array();
             file_put_contents($this->DIR."serverlist.json",json_encode($Serverlist,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT));
+        }else{
+            $this->Logger->PrintLine("服务器列表读取成功");
         }
         foreach($Serverlist as $SingleServer){
             $pool[] = new Minecraft($SingleServer);
