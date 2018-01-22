@@ -35,11 +35,11 @@ class Daemon{
             $Serverlist = json_decode($this->DIR."serverlist.json",true);
             $this->Logger->PrintLine("服务器列表读取成功");
         }
-        foreach($Serverlist as $SingleServer){
-            $this->Logger->PrintLine("服务器ID: ".$SingleServer." 正在开启");
-            $pool[] = new Minecraft($SingleServer);
-        }
-        if(isset($pool)) {
+        if(isset($Serverlist)){
+            foreach($Serverlist as $SingleServer){
+                $this->Logger->PrintLine("服务器ID: ".$SingleServer." 正在开启");
+                $pool[] = new Minecraft($SingleServer);
+            }
             foreach ($pool as $singlethread) {
                 $singlethread->start();
             }
