@@ -40,8 +40,12 @@ class Daemon{
                 $this->Logger->PrintLine("服务器ID: ".$SingleServer." 正在开启");
                 $pool[] = new Minecraft($SingleServer);
             }
-            foreach ($pool as $singlethread) {
-                $singlethread->start();
+            if(isset($pool)) {
+                foreach ($pool as $singlethread) {
+                    $singlethread->start();
+                }
+            }else{
+                $this->Logger->PrintLine("无法开启任何服务器",6);
             }
             $this->Logger->PrintLine("所有服务器均已开启");
         }else{
