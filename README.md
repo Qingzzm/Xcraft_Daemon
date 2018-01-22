@@ -4,9 +4,9 @@
 ## 支持系统
 [Linux Kernal完全兼容] 
 
-[Darwin Kernal兼容性未知] 
+[Darwin Kernal完全兼容] 
 
-[NT kernal无法兼容] 
+[NT kernal兼容性未知] 
 
 ##启动方式
 
