@@ -1,9 +1,8 @@
 [
     "Logger",
-    "Minecraft",
+    "Security",
     "Network",
-    "Encrypt",
-    "Daemon",
     "UserControl",
+    "Daemon",
     "ExampleModule"
 ]

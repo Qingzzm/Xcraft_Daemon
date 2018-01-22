@@ -25,7 +25,7 @@ class UserControl{
         $this->DIR = $DIR;
         $this->dataDIR = $dataDIR;
         $this->ListDIR = $this->dataDIR."list/";
-        @mkdir($this->ListDIR);
+        @mkdir($this->ListDIR,0777);
         return json_encode(array("USERDATADIR"=>$DIR,"DATADIR"=>$this->dataDIR));
     }
     public function NewUser($account,$password){

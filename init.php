@@ -19,13 +19,13 @@ define('DATADIR',BASEDIR."datas/");
 //因为啊,这个在读取modules之前没法使用输出函数啊...所以只能通过一个数组$StartingMessage[]去把预输出的信息都给梳理出来,启动之后立马把这些信息读取并且unset变量
 $StartingMessage = array();
 //预先修复目录
-@mkdir(MODULEDIR);
-@mkdir(CONFIGDIR);
-@mkdir(DEPENDENCYDIR);
-@mkdir(JARDIR);
-@mkdir(SERVERDIR);
-@mkdir(USERDATADIR);
-@mkdir(DATADIR);
+@mkdir(MODULEDIR,0777);
+@mkdir(CONFIGDIR,0777);
+@mkdir(DEPENDENCYDIR,0777);
+@mkdir(JARDIR,0777);
+@mkdir(SERVERDIR,0777);
+@mkdir(USERDATADIR,0777);
+@mkdir(DATADIR,0777);
 //读取config
 $setting_file=CONFIGDIR."settings.json";
 $module_file=CONFIGDIR."modules.json";
@@ -53,8 +53,8 @@ if(!file_exists($module_file)) {
     $StartingMessage["NoConfig:modules.json"] = array("找不到配置文件: modules.json,正在试图创建新文件",1);
     $modules=array(
         "Logger",
-        "Network",
         "Security",
+        "Network",
         "UserControl",
         "Daemon",
         "ExampleModule"
