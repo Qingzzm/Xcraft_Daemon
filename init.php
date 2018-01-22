@@ -55,8 +55,8 @@ if(!file_exists($module_file)) {
         "Logger",
         "Network",
         "Security",
-        "Daemon",
         "UserControl",
+        "Daemon",
         "ExampleModule"
     );
     file_put_contents($module_file,json_encode($modules,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT));

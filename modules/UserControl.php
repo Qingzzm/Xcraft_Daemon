@@ -70,7 +70,7 @@ class UserControl{
 
     }
     public function GetServerInfoByID($id){
-        if($this->Security->IsMatch($id) == true and file_exists($this->ListDIR.$id.".json")){
+        if($this->Security->IsMatch($id) and file_exists($this->ListDIR.$id.".json")){
             $data = json_decode(file_get_contents($this->ListDIR.$id.".json"),true);
             if($this->Security->IsMatch($data)){
                 return $data;
