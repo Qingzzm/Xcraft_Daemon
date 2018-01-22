@@ -10,7 +10,7 @@ class Minecraft extends Thread{
         if($data != false){
             $this->data = $data;
         }else{
-            $this->Shutdown();
+            $this->shutdown();
         }
         $this->Logger = $Logger;
     }
