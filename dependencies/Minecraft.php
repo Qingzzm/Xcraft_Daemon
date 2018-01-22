@@ -6,10 +6,11 @@
  * Time: 1:21 PM
  */
 class Minecraft extends Thread{
-    public function __construct($id){
+    public function __construct($id,$Logger){
         $this->id = $id;
+        $this->Logger = $Logger;
     }
     public function run(){
-        echo "看似成功的开启测试,id:".$this->id;
+        $this->Logger->Printline("看似成功的开启测试,id:".$this->id);
     }
 }
