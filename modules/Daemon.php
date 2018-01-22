@@ -44,10 +44,10 @@ class Daemon{
                 foreach ($pool as $singlethread) {
                     $singlethread->start();
                 }
+                $this->Logger->PrintLine("所有服务器均已尝试开启");
             }else{
                 $this->Logger->PrintLine("无法开启任何服务器",6);
             }
-            $this->Logger->PrintLine("所有服务器均已开启");
         }else{
             $this->Logger->PrintLine("服务器列表内没有任何服务器",1);
         }
