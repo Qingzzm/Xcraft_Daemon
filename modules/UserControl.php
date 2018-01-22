@@ -26,7 +26,7 @@ class UserControl{
         $this->dataDIR = $dataDIR;
         $this->ListDIR = $this->dataDIR."list/";
         @mkdir($this->ListDIR);
-        return json_encode(array("USERDATADIR"=>$DIR));
+        return json_encode(array("USERDATADIR"=>$DIR,"DATADIR"=>$this->dataDIR));
     }
     public function NewUser($account,$password){
         if(!is_dir($this->DIR.$account."/") and $this->Security->IsMatch($account) and $this->Security->IsMatch($password)) {
