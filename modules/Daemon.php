@@ -32,7 +32,7 @@ class Daemon{
             $Serverlist = array();
             file_put_contents($this->DIR."serverlist.json",json_encode($Serverlist,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT));
         }else{
-            $ServerList = json_decode($this->DIR."serverlist.json",true);
+            $Serverlist = json_decode($this->DIR."serverlist.json",true);
             $this->Logger->PrintLine("服务器列表读取成功");
         }
         foreach($Serverlist as $SingleServer){
