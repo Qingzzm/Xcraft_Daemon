@@ -6,11 +6,15 @@
  * Time: 1:21 PM
  */
 class Minecraft extends Thread{
-    public function __construct($id,$Logger){
-        $this->id = $id;
+    public function __construct($data,$Logger){
+        if($data != false){
+            $this->data = $data;
+        }else{
+            $this->Shutdown();
+        }
         $this->Logger = $Logger;
     }
     public function run(){
-        $this->Logger->Printline("看似成功的开启测试,id:".$this->id);
+        $this->Logger->Printline("看似成功的开启测试,id:".$this->id."data:".$this->data);
     }
 }

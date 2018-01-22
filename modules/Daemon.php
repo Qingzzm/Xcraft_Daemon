@@ -38,7 +38,7 @@ class Daemon{
         if(isset($Serverlist)){
             foreach($Serverlist as $SingleServer){
                 $this->Logger->PrintLine("服务器ID: ".$SingleServer." 正在开启");
-                $pool[] = new Minecraft($SingleServer,$this->Logger);
+                $pool[] = new Minecraft($this->UserControl->GetServerInfoByID($SingleServer),$this->Logger);
             }
             if(isset($pool)) {
                 foreach ($pool as $singlethread) {

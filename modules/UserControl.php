@@ -19,17 +19,21 @@ class UserControl{
      * @param $DIR
      * @return string
      */
-    public function SetMP($Logger,$Security,$DIR){
+    public function SetMP($Logger,$Security,$DIR,$dataDIR){
         $this->Logger = $Logger;
         $this->Security = $Security;
         $this->DIR = $DIR;
+        $this->dataDIR = $dataDIR;
+        $this->ListDIR = $this->dataDIR."list/";
+        @mkdir($this->ListDIR);
         return json_encode(array("USERDATADIR"=>$DIR));
     }
     public function NewUser($account,$password){
         if(!is_dir($this->DIR.$account."/") and $this->Security->IsMatch($account) and $this->Security->IsMatch($password)) {
             @mkdir($this->DIR . $account . "/");
             file_put_contents($this->DIR . $account . "/password", md5($password));
-            if (@file_get_contents($this->DIR . $account . "/password") == md5($password)) {
+            file_put_contents($this->DIR . $account . "/servers.json",json_encode(array()));
+            if (@file_get_contents($this->DIR . $account . "/password") == md5($password) and file_exists($this->DIR . $account . "/servers.json")) {
                 $this->Logger->PrintLine("成功添加新用户,用户信息:" . json_encode(array("account" => $account, "password" => $password), 0));
                 return true;
             }
@@ -43,8 +47,9 @@ class UserControl{
     public function DeleteUser($account){
         if($this->Security->IsMatch($account)) {
             @unlink($this->DIR . $account . "/password");
+            @unlink($this->DIR . $account . "/servers.json");
             @rmdir($this->DIR . $account . "/");
-            if (file_exists($this->DIR . $account . "/password")) {
+            if (file_exists($this->DIR . $account . "/password") or file_exists($this->DIR . $account . "/servers.json")) {
                 $this->Logger->PrintLine("失败删除老用户,用户信息:" . json_encode(array("account" => $account), 0));
                 return false;
             }
@@ -63,5 +68,19 @@ class UserControl{
     }
     public function GetUserInfo(){
 
+    }
+    public function GetServerInfoByID($id){
+        if($this->Security->IsMatch($id) and file_exists($this->ListDIR.$id.".json")){
+            $data = json_decode(file_get_contents($this->ListDIR.$id.".json"),true);
+            if($this->Security->IsMatch($data)){
+                return $data;
+            }else{
+                $this->Logger->PrintLine("出现了安全问题导致无法读取数据",5);
+                return false;
+            }
+        }else{
+            $this->Logger->PrintLine("不存在的ID,无法找到对应的数据或者出现了安全问题",5);
+            return false;
+        }
     }
 }
