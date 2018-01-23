@@ -8,7 +8,7 @@
 
 * [NT kernal兼容性未知] 
 
-##启动方式
+## 启动方式
 
 * php init.php
 ---
