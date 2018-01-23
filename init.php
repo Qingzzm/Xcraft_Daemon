@@ -56,6 +56,7 @@ if(!file_exists($module_file)) {
         "Security",
         "Network",
         "UserControl",
+        "ServerControl",
         "Daemon",
         "ExampleModule"
     );
@@ -77,7 +78,7 @@ foreach($modules as $module){
     }
 }
 //检测核心Module是否存在
-if(!isset($Logger) or !isset($Security) or !isset($Network) or !isset($Daemon) or !isset($UserControl)){
+if(!isset($Logger) or !isset($Security) or !isset($Network) or !isset($Daemon) or !isset($UserControl) or !isset($ServerControl)){
     die("FATAL ERROR(1)!\r\n");
 }
 //Logger开始运行咯!
@@ -86,10 +87,11 @@ $Logger->PrintLine("Logger配置: ".$Logger->SetMP());
 $Logger->PrintLine("Security配置: ".$Security->SetMP("aes-128-cbc",$settings["AESPassword"]));
 $Logger->PrintLine("Network配置: ".$Network->SetMP($settings["DaemonIP"],$settings["DaemonPort"],$settings["Interval"],$settings['worker_num'],$settings['max_request'],$Logger,$Security,$Daemon,XC_VERSION));
 $Logger->PrintLine("UserControl配置: ".$UserControl->SetMP($Logger,$Security,USERDATADIR,DATADIR));
-$Logger->PrintLine("Daemon配置: ". $Daemon->SetMP($Logger,$Security,$settings["DaemonPassword"],$UserControl,DATADIR));
+$Logger->Printline("ServerControl配置: ".$ServerControl->SetMP($Logger,$UserControl,$Security,DATADIR));
+$Logger->PrintLine("Daemon配置: ". $Daemon->SetMP($Logger,$Security,$settings["DaemonPassword"],$UserControl,$ServerControl,DATADIR));
 //加载普通module
 foreach($modules as $module){
-    if($module != "Logger" and $module != "Daemon" and $module != "Security" and $module != "Network" and $module != "UserControl" and isset(${$module})){
+    if($module != "Logger" and $module != "Daemon" and $module != "Security" and $module != "Network" and $module != "UserControl" and $module != "ServerControl" and isset(${$module})){
         $Logger->PrintLine($module."配置: ".${$module}->SetMP($Logger,$Security,$Network,$Daemon,$UserControl,$settings));
     }
 }

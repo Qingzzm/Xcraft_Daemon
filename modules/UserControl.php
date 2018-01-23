@@ -69,18 +69,4 @@ class UserControl{
     public function GetUserInfo(){
 
     }
-    public function GetServerInfoByID($id){
-        if($this->Security->IsMatch($id) and file_exists($this->ListDIR.$id.".json")){
-            $data = json_decode(file_get_contents($this->ListDIR.$id.".json"),true);
-            if($this->Security->IsMatch(json_encode($data))){
-                return $data;
-            }else{
-                $this->Logger->PrintLine("出现了安全问题导致无法读取数据",5);
-                return false;
-            }
-        }else{
-            $this->Logger->PrintLine("不存在的ID,无法找到对应的数据或者出现了安全问题",5);
-            return false;
-        }
-    }
 }

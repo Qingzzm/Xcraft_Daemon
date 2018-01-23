@@ -19,12 +19,13 @@ class Daemon{
      * @param $Password
      * @return string
      */
-    public function SetMP($Logger,$Security,$Password,$UserControl,$dir){
+    public function SetMP($Logger,$Security,$Password,$UserControl,$ServerControl,$dir){
         include(DEPENDENCYDIR."Minecraft.php");
         $this->Logger = $Logger;
         $this->Security = $Security;
         $this->Password = $Password;
         $this->UserControl = $UserControl;
+        $this->ServerControl = $ServerControl;
         $this->DIR = $dir;
         $this->Logger->PrintLine("读取服务器列表中");
         if(!file_exists($this->DIR."serverlist.json")){
@@ -38,7 +39,7 @@ class Daemon{
         if(isset($Serverlist)){
             foreach($Serverlist as $SingleServer){
                 $this->Logger->PrintLine("服务器ID: ".$SingleServer." 正在开启");
-                $pool[] = new Minecraft($this->UserControl->GetServerInfoByID($SingleServer),$this->Logger);
+                $pool[] = new Minecraft($this->ServerControl->GetServerInfoByID($SingleServer),$this->Logger);
             }
             if(isset($pool)) {
                 foreach ($pool as $singlethread) {
