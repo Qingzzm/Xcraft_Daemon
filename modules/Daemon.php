@@ -73,6 +73,9 @@ class Daemon{
                                 $this->Logger->PrintLine("接受来自客户端的添加用户请求并且请求失败");
                                 return $this->Logger->PrintJson("用户添加失败",2,false);
                             }
+                        }else{
+                            $this->Logger->PrintLine("客户端发起了缺少args的请求");
+                            return $this->Logger->PrintJson("缺少args",2,false);
                         }
                         break;
                     case "DeleteUser":
@@ -84,9 +87,24 @@ class Daemon{
                                 $this->Logger->PrintLine("接受来自客户端的删除用户请求并且请求失败");
                                 return $this->Logger->PrintJson("用户删除失败",2,false);
                             }
+                        }else{
+                            $this->Logger->PrintLine("客户端发起了缺少args的请求");
+                            return $this->Logger->PrintJson("缺少args",2,false);
                         }
                         break;
                     case "NewServer":
+                        if(isset($actions[2]) and isset($actions[3]) and isset($actions[4]) and isset($actions[5]) and isset($actions[6])){
+                            if($this->ServerControl->NewServer($actions[2],$actions[3],$actions[4],$actions[5],$actions[6])){
+                                $this->Logger->PrintLine("接受来自客户端的添加用户请求并且请求成功");
+                                return $this->Logger->PrintJson("服务器创建成功",0,true);
+                            }else{
+                                $this->Logger->PrintLine("接受来自客户端的添加用户请求并且请求失败");
+                                return $this->Logger->PrintJson("服务器创建失败",2,false);
+                            }
+                        }else{
+                            $this->Logger->PrintLine("客户端发起了缺少args的请求");
+                            return $this->Logger->PrintJson("缺少args",2,false);
+                        }
                         break;
                     case "DeleteServer":
                         break;
