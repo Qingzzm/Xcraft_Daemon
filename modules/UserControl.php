@@ -66,7 +66,7 @@ class UserControl{
         }
         return false;
     }
-    public function GetUserInfo(){
+    public function GetUserServers($username){
 
     }
 }
