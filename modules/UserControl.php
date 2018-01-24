@@ -31,9 +31,9 @@ class UserControl{
     public function NewUser($account,$password){
         if(!is_dir($this->DIR.$account."/") and $this->Security->IsMatch($account) and $this->Security->IsMatch($password)) {
             @mkdir($this->DIR . $account . "/");
-            file_put_contents($this->DIR . $account . "/password", md5($password));
-            file_put_contents($this->DIR . $account . "/servers.json",json_encode(array()));
-            if (@file_get_contents($this->DIR . $account . "/password") == md5($password) and file_exists($this->DIR . $account . "/servers.json")) {
+            @file_put_contents($this->DIR . $account . "/password", md5($password));
+            //file_put_contents($this->DIR . $account . "/servers.json",json_encode(array()));
+            if (@file_get_contents($this->DIR . $account . "/password") == md5($password)) {
                 $this->Logger->PrintLine("成功添加新用户,用户信息:" . json_encode(array("account" => $account, "password" => $password), 0));
                 return true;
             }
@@ -47,9 +47,9 @@ class UserControl{
     public function DeleteUser($account){
         if($this->Security->IsMatch($account)) {
             @unlink($this->DIR . $account . "/password");
-            @unlink($this->DIR . $account . "/servers.json");
+            //@unlink($this->DIR . $account . "/servers.json");
             @rmdir($this->DIR . $account . "/");
-            if (file_exists($this->DIR . $account . "/password") or file_exists($this->DIR . $account . "/servers.json")) {
+            if (file_exists($this->DIR . $account . "/password")) {
                 $this->Logger->PrintLine("失败删除老用户,用户信息:" . json_encode(array("account" => $account), 0));
                 return false;
             }
@@ -66,7 +66,14 @@ class UserControl{
         }
         return false;
     }
-    public function GetUserServers($username){
+    public function GetUserServers($account){
 
+    }
+    public function IsUser($account){
+        if(file_exists($this->DIR.$account."/password")){
+            return true;
+        }else{
+            return false;
+        }
     }
 }

@@ -32,7 +32,7 @@ class ServerControl{
         }
     }
     public function NewServer($AssignedUser,$MemorySize,$PlayerAmount,$IP,$Port){
-        if($this->Security->IsMatch($AssignedUser) and $this->Security->IsMatch($MemorySize) and $this->Security->IsMatch($PlayerAmount) and $this->Security->IsMatch($IP) and $this->Security->IsMatch($Port)){
+        if($this->Security->IsMatch($AssignedUser) and $this->Security->IsMatch($MemorySize) and $this->Security->IsMatch($PlayerAmount) and $this->Security->IsBasicallyMatch($IP) and $this->Security->IsMatch($Port) and $this->UserControl->IsUser($AssignedUser)){
             $ServerID=$this->GetCurrentServerID()+1;
             @mkdir($this->ServerDIR."server".$ServerID."/");
             @file_put_contents($this->DIR."list/".$ServerID.".json",json_encode(array("AssignedUser"=>$AssignedUser,"MemorySize"=>$MemorySize,"PlayerAmount"=>$PlayerAmount,"IP"=>$IP,"Port"=>$Port)));
