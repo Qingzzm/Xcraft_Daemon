@@ -71,7 +71,7 @@ class Security{
         }
     }
     public function IsBasicallyMatch($content){
-        if(preg_match("/^[A-Za-z0-9\=\/\+]+$/",$content)){
+        if(preg_match("^[1-9][0-9]*(\.[0-9]+)?$",$content)){
             return true;
         }else{
             return false;
