@@ -71,7 +71,7 @@ class Security{
         }
     }
     public function IsBasicallyMatch($content){
-        if(preg_match("^[\d\.]*$",$content)){
+        if(preg_match("(25[0-5]|2[0-4]\d|[0-1]\d{2}",$content)){
             return true;
         }else{
             return false;
