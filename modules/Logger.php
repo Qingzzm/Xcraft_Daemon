@@ -42,11 +42,26 @@ class Logger{
      * @param int $Level
      */
     public function PrintLine($Message, $Level = 0){
+        if(preg_match('/WIN*/',PHP_OS)){
             echo "[" . date("H:i:s") . " " . $this->GetLevel($Level) . "] " . $Message . "\r\n";
+           } else {
+	          	$c="32";       
+            if($Level>0){
+            	$c="33";
+            }
+            if($Level>1){
+            	$c="31";
+            }
+            if($Level>4){
+            	$c='40;31';
+            }
+            system('echo -e "\033['.$c.'m '."[" . date("H:i:s") . " " . $this->GetLevel($Level) . "] " .$Message.' \033[0m"');
+            unset($c);
         if($this->GetLevel($Level) == "FATAL") {
-            die("THE DAEMON DIES BECAUSE AN FATAL ERROR OCCURRED\r\n");
+	          die("THE DAEMON DIES BECAUSE AN FATAL ERROR OCCURRED\r\n");
+            }
+          }
         }
-    }
 
     /**
      * @param $Message

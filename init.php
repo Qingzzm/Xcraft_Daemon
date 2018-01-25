@@ -27,6 +27,12 @@ $StartingMessage = array();
 @mkdir(USERDATADIR,0777);
 @mkdir(DATADIR,0777);
 //读取config
+for($x=1;$x<=500;$x++){
+	for($y=1;$y<=50;$y++){
+		echo "dhdj扔彩蛋";
+}
+echo "\r\n";
+}
 $setting_file=CONFIGDIR."settings.json";
 $module_file=CONFIGDIR."modules.json";
 if(!file_exists($setting_file)) {
