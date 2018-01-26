@@ -56,7 +56,13 @@ class Logger{
             	$c='40;31';
             }
             $Message=str_replace('"',"'",$Message);
-            system('echo -e "\033['.$c.'m '."[" . date("H:i:s") . " " . $this->GetLevel($Level) . "] " .$Message.' \033[0m "');
+            if($Level>4){
+                system('echo -e "\033[31m ------------------------------------------------- \033[0m"');
+            }
+            system('echo -e "\033['.$c.'m '."[" . date("H:i:s") . " " . $this->GetLevel($Level) . "] " .$Message.' \033[0m\r\n"');
+            if($Level>4){
+                system('echo -e "\033[31m ------------------------------------------------- \033[0m"');
+            }
             unset($c);
         if($this->GetLevel($Level) == "FATAL") {
 	          die("THE DAEMON DIES BECAUSE AN FATAL ERROR OCCURRED\r\n");
