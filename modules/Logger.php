@@ -95,16 +95,16 @@ class Logger{
             case 2:
                 $stype = "ERROR";
                 break;
-            case 4:
+            case 3:
                 $stype = "DANGER";
                 break;
-            case 5:
+            case 4:
                 $stype = "PANIC";
                 break;
-            case 6:
+            case 5:
                 $stype = "DEADLY";
                 break;
-            case 7:
+            case 6:
                 $stype = "FATAL";
                 break;
             default:
