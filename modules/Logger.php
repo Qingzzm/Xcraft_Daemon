@@ -59,7 +59,7 @@ class Logger{
             if($Level>4){
                 system('echo -e "\033[31m ------------------------------------------------- \033[0m"');
             }
-            system('echo -e "\033['.$c.'m '."[" . date("H:i:s") . " " . $this->GetLevel($Level) . "] " .$Message.' \033[0m\r\n"');
+            system('echo -e "\033['.$c.'m '."[" . date("H:i:s") . " " . $this->GetLevel($Level) . "] " .$Message.' \033[0m"');
             if($Level>4){
                 system('echo -e "\033[31m ------------------------------------------------- \033[0m"');
             }
