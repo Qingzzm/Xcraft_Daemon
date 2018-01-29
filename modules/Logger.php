@@ -45,7 +45,7 @@ class Logger{
         if(preg_match('/WIN*/',PHP_OS)){
             echo "[" . date("H:i:s") . " " . $this->GetLevel($Level) . "] " . $Message . "\r\n";
            } else {
-	          	$c="32";       
+	          	$c="37";       
             if($Level>0){
             	$c="33";
             }
