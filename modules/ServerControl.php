@@ -14,6 +14,7 @@ class ServerControl{
         $this->UserControl = $UserControl;
         $this->Security = $Security;
         $this->DIR = $dataDIR;
+        $this->ListDIR = $this->DIR."list/";
         $this->ServerDIR = $ServerDIR;
         return json_encode(array("dataDIR"=>$this->DIR));
     }
