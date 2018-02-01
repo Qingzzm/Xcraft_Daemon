@@ -55,11 +55,20 @@ class Logger{
             if($Level>4){
             	$c='40;31';
             }
+            if($Level==233){
+                $c='40;32';
+            }
             $Message=str_replace('"',"'",$Message);
             if($Level>4){
                 system('echo -e "\033[31m ------------------------------------------------- \033[0m"');
             }
+            if($Level==233){
+                system('echo -e "\033[32m ------------------------------------------------- \033[0m"');
+            }
             system('echo -e "\033['.$c.'m '."[" . date("H:i:s") . " " . $this->GetLevel($Level) . "] " .$Message.' \033[0m"');
+            if($Level==233){
+                system('echo -e "\033[32m ------------------------------------------------- \033[0m"');
+            }
             if($Level>4){
                 system('echo -e "\033[31m ------------------------------------------------- \033[0m"');
             }
@@ -106,6 +115,9 @@ class Logger{
                 break;
             case 6:
                 $stype = "FATAL";
+                break;
+            case 233:
+                $stype = "SUCCESS";
                 break;
             default:
                 $stype = "INFORM";

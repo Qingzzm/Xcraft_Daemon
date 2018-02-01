@@ -32,7 +32,7 @@ class ServerControl{
         }
     }
     public function NewServer($AssignedUser,$MemorySize,$PlayerAmount,$IP,$Port){
-        if($this->Security->IsMatch($AssignedUser) and $this->Security->IsMatch($MemorySize) and $this->Security->IsMatch($PlayerAmount) and $this->Security->IsBasicallyMatch($IP) and $this->Security->IsMatch($Port) and $this->UserControl->IsUser($AssignedUser)){
+        if($this->Security->IsMatch($AssignedUser) and is_numeric($MemorySize) and is_numeric($PlayerAmount) and $this->Security->IsBasicallyMatch($IP) and is_numeric($Port) and $this->UserControl->IsUser($AssignedUser)){
             $ServerID=$this->GetCurrentServerID()+1;
             @mkdir($this->ServerDIR."server".$ServerID."/");
             @file_put_contents($this->DIR."list/".$ServerID.".json",json_encode(array("AssignedUser"=>$AssignedUser,"MemorySize"=>$MemorySize,"PlayerAmount"=>$PlayerAmount,"IP"=>$IP,"Port"=>$Port)));
@@ -40,7 +40,7 @@ class ServerControl{
             $currentserver[]=$ServerID;
             @file_put_contents($this->DIR."serverlist.json",json_encode($currentserver));
             if(file_exists($this->DIR."list/".$ServerID.".json") ){
-                $this->Logger->PrintLine("服务器创建成功");
+                $this->Logger->PrintLine("服务器创建成功",233);
                 return true;
             }else{
                 $this->Logger->PrintLine("出现了dhdj无法预知的错误并且创建服务器失败",5);
