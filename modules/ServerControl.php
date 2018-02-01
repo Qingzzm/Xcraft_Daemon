@@ -36,7 +36,7 @@ class ServerControl{
             $ServerID=$this->GetCurrentServerID()+1;
             @mkdir($this->ServerDIR."server".$ServerID."/");
             @file_put_contents($this->DIR."list/".$ServerID.".json",json_encode(array("AssignedUser"=>$AssignedUser,"MemorySize"=>$MemorySize,"PlayerAmount"=>$PlayerAmount,"IP"=>$IP,"Port"=>$Port)));
-            $currentserver[]=json_decode(file_get_contents($this->DIR."serverlist.json"),true);
+            $currentserver=json_decode(file_get_contents($this->DIR."serverlist.json"),true);
             $currentserver[]=$ServerID;
             @file_put_contents($this->DIR."serverlist.json",json_encode($currentserver));
             if(file_exists($this->DIR."list/".$ServerID.".json") ){
