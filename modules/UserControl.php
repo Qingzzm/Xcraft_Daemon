@@ -86,6 +86,18 @@ class UserControl{
             return false;
         }
     }
+    public function UpdateUserInfo($account,$password){
+        $UserInfo=$this->GetUserInfo($account);
+        if($UserInfo !== false){
+            $UserInfo["password"]=$password;
+            file_put_contents($this->DIR . $account . ".json",json_encode($UserInfo));
+            $this->Logger->PrintLine("成功的更新了用户的信息");
+            return true;
+        }else{
+            $this->Logger->PrintLine("出现了一个安全错误导致无法执行",5);
+            return false;
+        }
+    }
     public function IsUser($account){
         if(file_exists($this->DIR.$account."/password")){
             return true;
