@@ -44,10 +44,10 @@ class UserControl{
             @file_put_contents($accountFile,json_encode(array("id"=>$this->GetCurrentID(),"password"=>md5($password))));
             $this->UpdateCurrentID();
             if(file_exists($accountFile)){
-                $this->Logger->PrintLine("成功添加新用户,用户信息:" . json_encode(array("account" => $account, "password" => $password),233));
+                $this->Logger->PrintLine("成功添加新用户,用户信息:" . json_encode(array("account" => $account, "password" => $password)),233);
                 return true;
             }else{
-                $this->Logger->PrintLine("失败添加新用户,用户信息:" . json_encode(array("account" => $account, "password" => $password),2));
+                $this->Logger->PrintLine("失败添加新用户,用户信息:" . json_encode(array("account" => $account, "password" => $password)),2);
                 return false;
             }
         }else{
@@ -59,10 +59,10 @@ class UserControl{
         if($this->Security->IsMatch($account)) {
             @unlink($this->DIR . $account . ".json");
             if (file_exists($this->DIR . $account . ".json")) {
-                $this->Logger->PrintLine("失败删除老用户,用户信息:" . json_encode(array("account" => $account), 0));
+                $this->Logger->PrintLine("失败删除老用户,用户信息:" . json_encode(array("account" => $account)),0);
                 return false;
             }
-            $this->Logger->PrintLine("成功删除老用户,用户信息:" . json_encode(array("account" => $account), 233));
+            $this->Logger->PrintLine("成功删除老用户,用户信息:" . json_encode(array("account" => $account)),233);
             return true;
         }else{
             $this->Logger->PrintLine("出现了一个安全错误导致无法执行",5);
