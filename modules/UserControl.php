@@ -44,10 +44,10 @@ class UserControl{
             @file_put_contents($accountFile,json_encode(array("id"=>$this->GetCurrentID(),"password"=>md5($password))));
             $this->UpdateCurrentID();
             if(file_exists($accountFile)){
-                $this->Logger->PrintLine("成功添加新用户,用户信息:" . json_encode(array("account" => $account, "password" => $password), 233));
+                $this->Logger->PrintLine("成功添加新用户,用户信息:" . json_encode(array("account" => $account, "password" => $password),233));
                 return true;
             }else{
-                $this->Logger->PrintLine("失败添加新用户,用户信息:" . json_encode(array("account" => $account, "password" => $password), 2));
+                $this->Logger->PrintLine("失败添加新用户,用户信息:" . json_encode(array("account" => $account, "password" => $password),2));
                 return false;
             }
         }else{
