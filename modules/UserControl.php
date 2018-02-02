@@ -56,9 +56,9 @@ class UserControl{
         }
     }
     public function DeleteUser($account){
-        if($this->Security->IsMatch($account)) {
-            @unlink($this->DIR . $account . ".json");
-            if (file_exists($this->DIR . $account . ".json")) {
+        if($this->Security->IsMatch($account) and !file_exists($accountFile=$this->DIR . $account . ".json")) {
+            @unlink($accountFile);
+            if (file_exists($accountFile)) {
                 $this->Logger->PrintLine("失败删除老用户,用户信息:" . json_encode(array("account" => $account)),0);
                 return false;
             }
