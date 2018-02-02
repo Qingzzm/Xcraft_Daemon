@@ -16,7 +16,7 @@ class Minecraft extends Thread{
     }
     public function run(){
         if($this->DoShutDown){
-            $this->shutdown();
+            die("[意外]:dhdj!你又写bug!,赶紧给我修复了!!!\r\n");
         }
         $this->Logger->Printline("看似成功的开启测试,id:".$this->id."data:".$this->data);
     }
