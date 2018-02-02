@@ -7,6 +7,7 @@
  */
 class Minecraft extends Thread{
     public function __construct($data,$Logger){
+        $this->DoShutDown=0;
         if($data != false){
             $this->data = $data;
             $this->id= $data["id"];
