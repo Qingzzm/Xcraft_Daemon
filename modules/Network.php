@@ -62,6 +62,7 @@ class Network{
         $action = substr($datas[1],1);
         unset($datas);
         unset($data);
+        if($action != "favicon.ico") {
             //响应行
             $respData = $this->Security->Decrypt($this->Security->Encrypt($this->Daemon->ReceiveConnection($action)));//为了确保显示结果正常加密正常, 我选择加密后再解密,解密那个正式测试好了之后会删除的
             $response = array(
@@ -69,20 +70,42 @@ class Network{
             );
             //响应头
             $headers = array(
-                'Server'=>'Xcraft'.$this->Version,
-                'Content-Type'=>'text/html;charset=utf8',
-                'Content-Length'=>strlen($respData),
+                'Server' => 'Xcraft' . $this->Version,
+                'Content-Type' => 'text/html;charset=utf8',
+                'Content-Length' => strlen($respData),
             );
-            foreach($headers as $key=>$val){
-                $response[] = $key.':'.$val;
+            foreach ($headers as $key => $val) {
+                $response[] = $key . ':' . $val;
             }
             //空行
             $response[] = '';
             //响应体
             $response[] = $respData;
-            $send_data = join("\r\n",$response);
+            $send_data = join("\r\n", $response);
             $serv->send($fd, $send_data);
-        $this->Logger->PrintLine("收到一条http请求,from_id:".$from_id.",参数:{".$action."}");
+            $this->Logger->PrintLine("收到一条http请求,from_id:" . $from_id . ",参数:{" . $action . "}");
+        }else{
+            $respData = "你TM的能不能别用游览器调用,TM能不能别给我请求Favicon了,cnm";//为了确保显示结果正常加密正常, 我选择加密后再解密,解密那个正式测试好了之后会删除的
+            $response = array(
+                'HTTP/1.1 200',
+            );
+            //响应头
+            $headers = array(
+                'Server' => 'Xcraft' . $this->Version,
+                'Content-Type' => 'text/html;charset=utf8',
+                'Content-Length' => strlen($respData),
+            );
+            foreach ($headers as $key => $val) {
+                $response[] = $key . ':' . $val;
+            }
+            //空行
+            $response[] = '';
+            //响应体
+            $response[] = $respData;
+            $send_data = join("\r\n", $response);
+            $serv->send($fd, $send_data);
+            $this->Logger->PrintLine("你TM的能不能别用游览器调用,TM能不能别给我请求Favicon了,cnm");
+        }
 
     }
 
