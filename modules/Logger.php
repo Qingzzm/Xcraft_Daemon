@@ -32,6 +32,7 @@ class Logger{
         $this->PrintLine(' / /  \ \  \ \-----\  |-|       \ \-----/ |  | |             ||     ');
         $this->PrintLine('/--    \--  \------/  |-|        \-------/ \ |-|             --     ');
         $this->PrintLine('                                                        '.$Version.'');
+        $this->PrintLine('友情提示,所有输出的json因为格式问题,双引号全部被过滤为单引号,如果需要使用请自行更改',1);
         foreach($StartingMessage as $SingleMessage){
             $this->PrintLine($SingleMessage[0],$SingleMessage[1]);
         }
