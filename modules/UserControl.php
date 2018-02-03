@@ -89,7 +89,7 @@ class UserControl{
     public function UpdateUserInfo($account,$password){
         $UserInfo=$this->GetUserInfo($account);
         if($UserInfo !== false){
-            $UserInfo["password"]=$password;
+            $UserInfo["password"]=md5($password);
             file_put_contents($this->DIR . $account . ".json",json_encode($UserInfo));
             $this->Logger->PrintLine("成功的更新了用户的信息",233);
             return true;
