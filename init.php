@@ -27,20 +27,12 @@ $StartingMessage = array();
 @mkdir(USERDATADIR,0777);
 @mkdir(DATADIR,0777);
 //读取config
-/*
-for($x=1;$x<=500;$x++){
-	for($y=1;$y<=50;$y++){
-		echo "dhdj扔彩蛋";
-}
-echo "\r\n";
-}
-*/
 $setting_file=CONFIGDIR."settings.json";
 $module_file=CONFIGDIR."modules.json";
 if(!file_exists($setting_file)) {
     $StartingMessage["NoConfig:settings.json"] = array("找不到配置文件: settings.json,正在试图创建新文件",1);
     $settings=array(
-        "TPS"=>60,
+        "TPS"=>60,//因为采用了Swoole扩展,所以TPS功能即将被我删除
         "DaemonID"=>1,
         "DaemonIP"=>"127.0.0.1",
         "DaemonPort"=>18114,
@@ -56,7 +48,7 @@ if(!file_exists($setting_file)) {
     if($settings == null)
         die("FATAL ERROR(0)!\r\n");
 }
-$settings["Interval"]=round(1000/$settings["TPS"]);
+$settings["Interval"]=round(1000/$settings["TPS"]);//因为采用了Swoole扩展,所以TPS功能即将被我删除
 if(!file_exists($module_file)) {
     $StartingMessage["NoConfig:modules.json"] = array("找不到配置文件: modules.json,正在试图创建新文件",1);
     $modules=array(
