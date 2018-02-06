@@ -9,13 +9,14 @@ class ServerControl{
     public function __construct(){
 
     }
-    public function SetMP($Logger,$UserControl,$Security,$dataDIR,$ServerDIR){
+    public function SetMP($Logger,$UserControl,$Security,$dataDIR,$ServerDIR,$JarDIR){
         $this->Logger = $Logger;
         $this->UserControl = $UserControl;
         $this->Security = $Security;
         $this->DIR = $dataDIR;
         $this->ListDIR = $this->DIR."list/";
         $this->ServerDIR = $ServerDIR;
+        $this->JarDIR = $JarDIR;
         return json_encode(array("dataDIR"=>$this->DIR));
     }
     public function GetServerInfoByID($id){
@@ -28,11 +29,11 @@ class ServerControl{
             return false;
         }
     }
-    public function NewServer($AssignedUser,$MemorySize,$PlayerAmount,$IP,$Port){
-        if($this->Security->IsMatch($AssignedUser) and is_numeric($MemorySize) and is_numeric($PlayerAmount) and $this->Security->IsBasicallyMatch($IP) and is_numeric($Port) and $this->UserControl->IsUser($AssignedUser)){
+    public function NewServer($AssignedUser,$MemorySize,$PlayerAmount,$IP,$Port,$JarName){
+        if($this->Security->IsMatch($AssignedUser) and is_numeric($MemorySize) and is_numeric($PlayerAmount) and $this->Security->IsBasicallyMatch($IP) and is_numeric($Port) and $this->UserControl->IsUser($AssignedUser) and file_exists($this->JarDIR.$JarName) and file_exists($this->JarDIR.$JarName.".conf")){
             $ServerID=$this->GetCurrentServerID()+1;
             @mkdir($this->ServerDIR."server".$ServerID."/");
-            @file_put_contents($this->DIR."list/".$ServerID.".json",json_encode(array("AssignedUser"=>$AssignedUser,"MemorySize"=>$MemorySize,"PlayerAmount"=>$PlayerAmount,"IP"=>$IP,"Port"=>$Port)));
+            @file_put_contents($this->DIR."list/".$ServerID.".json",json_encode(array("AssignedUser"=>$AssignedUser,"MemorySize"=>$MemorySize,"PlayerAmount"=>$PlayerAmount,"IP"=>$IP,"Port"=>$Port,"JarName"=>$JarName)));
             $currentserver=json_decode(file_get_contents($this->DIR."serverlist.json"),true);
             $currentserver[]=$ServerID;
             @file_put_contents($this->DIR."serverlist.json",json_encode($currentserver));
