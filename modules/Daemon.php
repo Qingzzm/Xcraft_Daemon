@@ -93,8 +93,8 @@ class Daemon{
                         }
                         break;
                     case "UpdateUserInfo":
-                        if(isset($actions[2])) {
-                            if($this->UserControl->UpdateUserInfo($actions[2])){
+                        if(isset($actions[2]) and isset($actions[3])) {
+                            if($this->UserControl->UpdateUserInfo($actions[2],$actions[3])){
                                 $this->Logger->PrintLine("接受来自客户端的更新用户请求并且请求成功");
                                 return $this->Logger->PrintJson("用户更新成功",0,true);
                             }else{
