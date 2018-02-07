@@ -13,3 +13,4 @@
 * php init.php
 ---
 *[需要安装Pthreads扩展,Openssl扩展和Swoole扩展,建议版本PHP7.2]*
+.
